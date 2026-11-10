@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TechCare 60+ – Lembrete de atividade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+h1{overflow-wrap:anywhere}
+body{margin:0}
+a{color:#0B5D66}a:hover{color:#08434A}
+</style>
+<style>
+body{background:#DDE3DF}
+#dc-root>*{background-color:#F4F6F3}
+@media (min-width: 820px){
+  #dc-root{padding:24px 0}
+  #dc-root>*{min-height:calc(100vh - 48px) !important;border-radius:24px;box-shadow:0 8px 30px rgba(0,0,0,.18);overflow:hidden}
+}
+@media (max-width: 819px){#dc-root{padding-bottom:64px}}
+.tc-home{position:fixed;right:16px;bottom:16px;z-index:50;font:600 14px/1 system-ui,sans-serif;background:#183236;color:#fff;text-decoration:none;padding:10px 14px;border-radius:999px;opacity:.85}
+.tc-home:hover{opacity:1;color:#fff}
+</style>
+<script src="../assets/dc-lite.js"></script>
+</head>
+<body>
+<template id="dc-tpl">
+<div style="width: 100%; max-width: 768px; min-height: 100vh; margin: 0 auto; box-sizing: border-box; padding: clamp(16px, 8.33vw, 64px) clamp(16px, 7.29vw, 56px) clamp(16px, 6.25vw, 48px); display: flex; flex-direction: column; align-items: center; gap: 32px; background: #0B5D66; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; color: #FFFFFF; text-align: center">
+  <div style="font-size: clamp(18px, 3.39vw, 26px); opacity: 0.92">TechCare 60+ · 15:00</div>
+
+  <div style="margin-top: 30px; width: clamp(112px, 26.04vw, 200px); height: clamp(112px, 26.04vw, 200px); border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+    <svg width="104" height="104" viewBox="0 0 24 24" fill="none" stroke="#0B5D66" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 16px">
+    <h1 style="margin: 0; font-size: clamp(37px, 7.29vw, 56px); line-height: 1.1">Hora da sua atividade, Maria!</h1>
+    <p style="margin: 0; font-size: clamp(22px, 4.43vw, 34px); line-height: 1.35">Complete a frase</p>
+    <p style="margin: 0; font-size: clamp(18px, 3.39vw, 26px); line-height: 1.4; opacity: 0.92">Indicada pela sua fonoaudióloga · cerca de 5 minutos</p>
+  </div>
+
+  <button style="font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 14px; height: 76px; padding: 0 32px; border-radius: 22px; border: 3px solid #FFFFFF; background: transparent; font-size: clamp(18px, 3.65vw, 28px); font-weight: 700; color: #FFFFFF">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+    Ouvir o lembrete
+  </button>
+
+  <div style="margin-top: auto; align-self: stretch; display: flex; flex-direction: column; gap: 18px">
+    <a href="Idoso-Instrucao.html" style="display: flex; align-items: center; justify-content: center; gap: 14px; height: 104px; border-radius: 24px; background: #FFFFFF; color: #0B5D66; font-size: clamp(24px, 4.69vw, 36px); font-weight: 700; text-decoration: none">
+      Fazer agora
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="#0B5D66" stroke="none" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
+    </a>
+    <a href="Idoso-Hoje.html" style="display: flex; align-items: center; justify-content: center; gap: 12px; height: 88px; box-sizing: border-box; border-radius: 24px; border: 3px solid #FFFFFF; color: #FFFFFF; font-size: clamp(20px, 3.91vw, 30px); font-weight: 700; text-decoration: none">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M5 3L2 6M22 6l-3-3"/></svg>
+      Lembrar em 30 minutos
+    </a>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<a class="tc-home" href="../index.html">← Índice</a>
+<script type="text/x-dc" id="dc-logic" data-props='{"$preview":{"width":768,"height":1024}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TechCare 60+ — Protótipo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1B1F23;--muted:#4A5560;--ground:#F4F6F3;--card:#FFFFFF;--line:#D5DBD7;--teal:#0B5D66;--purple:#5B3F9E}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:'Atkinson Hyperlegible',system-ui,sans-serif}
+header{background:var(--teal);color:#fff;padding:48px 16px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+header h1{margin:0 0 8px;font-size:clamp(30px,5vw,48px)}
+header p{margin:0;font-size:18px;line-height:1.5;max-width:760px;opacity:.95}
+main{padding:32px 0 64px}
+h2{font-size:26px;margin:40px 0 6px}
+.sub{margin:0 0 18px;color:var(--muted);font-size:16px;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px}
+.grid.prof{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.card{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;text-decoration:none;color:var(--ink);transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
+.card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;border-radius:8px;border:1px solid var(--line);background:#fff}
+.prof .card img{aspect-ratio:16/10}
+.n{font-size:13px;font-weight:700;color:var(--teal);letter-spacing:.5px}
+.t{font-size:16px;font-weight:700;line-height:1.3}
+.flow{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-size:16px;line-height:1.6}
+ul.spec{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+ul.spec a{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:var(--purple);font-weight:700;text-decoration:none}
+ul.spec a:hover{border-color:var(--purple)}
+footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-size:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<h1>TechCare 60+</h1>
+<p>Protótipo navegável de uma aplicação de tecnologia, saúde e inclusão para a pessoa idosa, com apoio à fonoaudiologia. Trabalho da disciplina Engenharia de Requisitos (CEUB).</p>
+</div></header>
+<main class="wrap">
+<h2>App da pessoa idosa (tablet)</h2>
+<p class="sub">Comece pela Tela 1. O PIN aceita quaisquer 4 números e o jogo da memória é jogável.</p>
+<div class="grid"><a class="card" href="prototipo/Main.html"><img src="assets/telas/Tela_01_Main.png" alt="Miniatura: Idoso – Escolher perfil" loading="lazy"><span class="n">Tela 1</span><span class="t">Idoso – Escolher perfil</span></a><a class="card" href="prototipo/Idoso-PIN.html"><img src="assets/telas/Tela_02_Idoso-PIN.png" alt="Miniatura: Idoso – Digitar PIN" loading="lazy"><span class="n">Tela 2</span><span class="t">Idoso – Digitar PIN</span></a><a class="card" href="prototipo/Idoso-Hoje.html"><img src="assets/telas/Tela_03_Idoso-Hoje.png" alt="Miniatura: Idoso – Atividades de hoje" loading="lazy"><span class="n">Tela 3</span><span class="t">Idoso – Atividades de hoje</span></a><a class="card" href="prototipo/Idoso-Instrucao.html"><img src="assets/telas/Tela_04_Idoso-Instrucao.png" alt="Miniatura: Idoso – Instruções" loading="lazy"><span class="n">Tela 4</span><span class="t">Idoso – Instruções</span></a><a class="card" href="prototipo/Idoso-Memoria.html"><img src="assets/telas/Tela_05_Idoso-Memoria.png" alt="Miniatura: Idoso – Jogo da memória" loading="lazy"><span class="n">Tela 5</span><span class="t">Idoso – Jogo da memória</span></a><a class="card" href="prototipo/Idoso-Concluido.html"><img src="assets/telas/Tela_06_Idoso-Concluido.png" alt="Miniatura: Idoso – Atividade concluída" loading="lazy"><span class="n">Tela 6</span><span class="t">Idoso – Atividade concluída</span></a><a class="card" href="prototipo/Idoso-Lembrete.html"><img src="assets/telas/Tela_07_Idoso-Lembrete.png" alt="Miniatura: Idoso – Lembrete" loading="lazy"><span class="n">Tela 7</span><span class="t">Idoso – Lembrete</span></a></div>
+
+<h2>Área do profissional (web)</h2>
+<p class="sub">Login, idosos em acompanhamento, perfil com acessibilidade e consentimento, plano de atividades e evolução.</p>
+<div class="grid prof"><a class="card" href="prototipo/Prof-Login.html"><img src="assets/telas/Tela_08_Prof-Login.png" alt="Miniatura: Profissional – Login" loading="lazy"><span class="n">Tela 8</span><span class="t">Profissional – Login</span></a><a class="card" href="prototipo/Prof-Idosos.html"><img src="assets/telas/Tela_09_Prof-Idosos.png" alt="Miniatura: Profissional – Idosos em acompanhamento" loading="lazy"><span class="n">Tela 9</span><span class="t">Profissional – Idosos em acompanhamento</span></a><a class="card" href="prototipo/Prof-Perfil.html"><img src="assets/telas/Tela_10_Prof-Perfil.png" alt="Miniatura: Profissional – Perfil do idoso" loading="lazy"><span class="n">Tela 10</span><span class="t">Profissional – Perfil do idoso</span></a><a class="card" href="prototipo/Prof-Plano.html"><img src="assets/telas/Tela_11_Prof-Plano.png" alt="Miniatura: Profissional – Plano de atividades" loading="lazy"><span class="n">Tela 11</span><span class="t">Profissional – Plano de atividades</span></a><a class="card" href="prototipo/Prof-Relatorio.html"><img src="assets/telas/Tela_12_Prof-Relatorio.png" alt="Miniatura: Profissional – Evolução e relatório" loading="lazy"><span class="n">Tela 12</span><span class="t">Profissional – Evolução e relatório</span></a></div>
+
+</main>
+<footer><div class="wrap">Todos os nomes, números e gráficos exibidos no protótipo são fictícios. Atividades e indicadores são sugestões a validar com profissionais de fonoaudiologia.</div></footer>
+</body>
+</html>

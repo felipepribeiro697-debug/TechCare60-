@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TechCare 60+ – Digitar PIN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+h1{overflow-wrap:anywhere}
+body{margin:0}
+a{color:#0B5D66}a:hover{color:#08434A}
+.key{font-family:inherit;cursor:pointer}
+.key:active{background:#E3F0F1}
+</style>
+<style>
+body{background:#DDE3DF}
+#dc-root>*{background-color:#F4F6F3}
+@media (min-width: 820px){
+  #dc-root{padding:24px 0}
+  #dc-root>*{min-height:calc(100vh - 48px) !important;border-radius:24px;box-shadow:0 8px 30px rgba(0,0,0,.18);overflow:hidden}
+}
+@media (max-width: 819px){#dc-root{padding-bottom:64px}}
+.tc-home{position:fixed;right:16px;bottom:16px;z-index:50;font:600 14px/1 system-ui,sans-serif;background:#183236;color:#fff;text-decoration:none;padding:10px 14px;border-radius:999px;opacity:.85}
+.tc-home:hover{opacity:1;color:#fff}
+</style>
+<script src="../assets/dc-lite.js"></script>
+</head>
+<body>
+<template id="dc-tpl">
+<div style="width: 100%; max-width: 768px; min-height: 100vh; margin: 0 auto; box-sizing: border-box; padding: clamp(16px, 6.25vw, 48px) clamp(16px, 7.29vw, 56px); display: flex; flex-direction: column; align-items: center; gap: 32px; background: #F4F6F3; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; color: #1B1F23">
+  <div style="align-self: stretch; display: flex; justify-content: space-between; align-items: center">
+    <a href="Main.html" style="display: flex; align-items: center; gap: 10px; font-size: clamp(18px, 3.12vw, 24px); font-weight: 700; text-decoration: none; padding: 12px 20px 12px 8px; border-radius: 16px; background: #FFFFFF; border: 2px solid #C9D1CC; color: #1B1F23">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1B1F23" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+      Voltar
+    </a>
+    <div style="font-size: 22px; color: #4A5560">TechCare 60+</div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 14px">
+    <div style="width: clamp(67px, 15.62vw, 120px); height: clamp(67px, 15.62vw, 120px); border-radius: 50%; background: #E3F0F1; display: flex; align-items: center; justify-content: center; font-size: clamp(33px, 6.51vw, 50px); font-weight: 700; color: #0B5D66">M</div>
+    <h1 style="margin: 0; font-size: clamp(26px, 5.21vw, 40px)">Olá, Maria!</h1>
+    <p style="margin: 0; font-size: clamp(18px, 3.65vw, 28px); color: #2B333A">Digite seus 4 números secretos.</p>
+  </div>
+
+  <div style="display: flex; gap: 24px" aria-label="Números digitados">
+    <template data-k="for" list="{{dots}}" as="dot" hint-placeholder-count="4">
+      <div style="{{dot.style}}"></div>
+    </template>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; width: 100%; max-width: 480px">
+    <template data-k="for" list="{{keys}}" as="k" hint-placeholder-count="9">
+      <button class="key" onClick="{{k.press}}" style="height: 96px; border-radius: 22px; border: 2px solid #C9D1CC; background: #FFFFFF; font-size: clamp(29px, 5.73vw, 44px); font-weight: 700; color: #1B1F23">{{k.label}}</button>
+    </template>
+    <button class="key" onClick="{{clear}}" aria-label="Apagar" style="height: 96px; border-radius: 22px; border: 2px solid #C9D1CC; background: #FFFFFF; font-size: clamp(18px, 3.12vw, 24px); font-weight: 700; color: #1B1F23; display: flex; align-items: center; justify-content: center; gap: 8px">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1B1F23" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><path d="M18 9l-6 6M12 9l6 6"/></svg>
+      Apagar
+    </button>
+    <button class="key" onClick="{{zero}}" style="height: 96px; border-radius: 22px; border: 2px solid #C9D1CC; background: #FFFFFF; font-size: clamp(29px, 5.73vw, 44px); font-weight: 700; color: #1B1F23">0</button>
+    <div></div>
+  </div>
+
+  <template data-k="if" value="{{complete}}" hint-placeholder-val="{{ false }}">
+    <a href="Idoso-Hoje.html" style="display: flex; align-items: center; justify-content: center; gap: 12px; width: clamp(269px, 62.50vw, 480px); height: clamp(54px, 12.50vw, 96px); border-radius: 50%; background: #0B5D66; color: #FFFFFF; font-size: clamp(22px, 4.43vw, 34px); font-weight: 700; text-decoration: none">
+      Entrar
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </template>
+  <template data-k="if" value="{{incomplete}}" hint-placeholder-val="{{ true }}">
+    <div style="font-size: 22px; color: #4A5560; text-align: center; line-height: 1.4">Esqueceu os números? Peça ajuda ao profissional.</div>
+  </template>
+</div>
+</template>
+<div id="dc-root"></div>
+<a class="tc-home" href="../index.html">← Índice</a>
+<script type="text/x-dc" id="dc-logic" data-props='{"$preview":{"width":768,"height":1024}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { pin: '' };
+  }
+  add(d) {
+    if (this.state.pin.length < 4) this.setState({ pin: this.state.pin + d });
+  }
+  renderVals() {
+    const n = this.state.pin.length;
+    const dots = [0, 1, 2, 3].map((i) => ({
+      style: 'width: 40px; height: 40px; border-radius: 20px; box-sizing: border-box; border: 4px solid #0B5D66; background: ' + (i < n ? '#0B5D66' : '#FFFFFF')
+    }));
+    const keys = ['1','2','3','4','5','6','7','8','9'].map((d) => ({ label: d, press: () => this.add(d) }));
+    return {
+      dots,
+      keys,
+      zero: () => this.add('0'),
+      clear: () => this.setState({ pin: this.state.pin.slice(0, -1) }),
+      complete: n === 4,
+      incomplete: n < 4
+    };
+  }
+}
+</script>
+</body>
+</html>

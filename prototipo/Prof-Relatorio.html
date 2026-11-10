@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TechCare 60+ – Evolução e relatório</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0B5D66}a:hover{color:#08434A}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid #0B5D66;outline-offset:1px}
+</style>
+<style>
+#dc-root{min-height:100vh}
+@media (max-width: 779px){
+  nav[aria-label="Menu principal"]{flex-direction:row !important;flex-wrap:wrap;align-items:center;gap:4px !important;border-right:none !important;border-bottom:1px solid #D5DBD7;padding:10px 12px !important}
+  nav[aria-label="Menu principal"]>div{padding:0 12px 0 4px !important;width:100%}
+  nav[aria-label="Menu principal"]>a{padding:10px 12px !important;margin-top:0 !important}
+}
+@media (max-width: 819px){#dc-root{padding-bottom:64px}}
+.tc-home{position:fixed;right:16px;bottom:16px;z-index:50;font:600 14px/1 system-ui,sans-serif;background:#183236;color:#fff;text-decoration:none;padding:10px 14px;border-radius:999px;opacity:.85}
+.tc-home:hover{opacity:1;color:#fff}
+</style>
+<script src="../assets/dc-lite.js"></script>
+
+</head>
+<body>
+<template id="dc-tpl">
+<div style="min-height: 1240px; display: flex; flex-wrap: wrap; background: #F4F6F3; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; color: #1B1F23">
+  <nav aria-label="Menu principal" style="flex: 1 1 220px; max-width: 100%; box-sizing: border-box; padding: 28px 18px; background: #FFFFFF; border-right: 1px solid #D5DBD7; display: flex; flex-direction: column; gap: 6px">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 10px 22px">
+      <div style="width: 36px; height: 36px; border-radius: 10px; background: #0B5D66; display: flex; align-items: center; justify-content: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>
+      </div>
+      <div style="font-size: 19px; font-weight: 700">TechCare 60+</div>
+    </div>
+    <a href="Prof-Idosos.html" style="display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 10px; color: #2B333A; font-size: 16px; text-decoration: none">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M17 11a3 3 0 1 0 0-6M22 21a6 6 0 0 0-4-5.7"/></svg>
+      Idosos
+    </a>
+    <a href="Prof-Plano.html" style="display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 10px; color: #2B333A; font-size: 16px; text-decoration: none">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      Catálogo de atividades
+    </a>
+    <a href="Prof-Relatorio.html" style="display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 10px; background: #E3F0F1; color: #08434A; font-weight: 700; font-size: 16px; text-decoration: none">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+      Relatórios
+    </a>
+    <a href="Prof-Login.html" style="margin-top: 24px; display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 10px; color: #2B333A; font-size: 16px; text-decoration: none">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      Sair
+    </a>
+  </nav>
+
+  <main style="flex: 999 1 560px; min-width: 0; box-sizing: border-box; padding: clamp(16px, 4vw, 32px) clamp(16px, 4vw, 40px); display: flex; flex-direction: column; gap: 22px">
+    <div style="font-size: 15px; color: #4A5560"><a href="Prof-Idosos.html">Idosos</a> › <a href="Prof-Perfil.html">Maria Aparecida Souza</a> › Evolução</div>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px">
+      <h1 style="margin: 0; font-size: 28px">Evolução – Maria</h1>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px">
+        <button style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 10px; border: 1px solid #9AA6A0; background: #FFFFFF; font-size: 15px; font-weight: 700; color: #1B1F23">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1B1F23" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          Adicionar observação
+        </button>
+        <button style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 10px; border: none; background: #0B5D66; font-size: 15px; font-weight: 700; color: #FFFFFF">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+          Exportar PDF
+        </button>
+      </div>
+    </div>
+
+    <div role="tablist" style="display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 2px solid #D5DBD7">
+      <a href="Prof-Perfil.html" style="padding: 12px 18px; font-size: 16px; color: #2B333A; text-decoration: none">Perfil</a>
+      <a href="Prof-Plano.html" style="padding: 12px 18px; font-size: 16px; color: #2B333A; text-decoration: none">Plano de atividades</a>
+      <a href="Prof-Relatorio.html" style="padding: 12px 18px; font-size: 16px; font-weight: 700; color: #08434A; border-bottom: 3px solid #0B5D66; margin-bottom: -2px; text-decoration: none">Evolução</a>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+      <span style="font-size: 15px; font-weight: 700; margin-right: 4px">Período:</span>
+      <template data-k="for" list="{{periods}}" as="pe" hint-placeholder-count="3">
+        <button onClick="{{pe.pick}}" aria-pressed="{{pe.on}}" style="{{pe.style}}">{{pe.label}}</button>
+      </template>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); gap: 16px">
+      <div style="background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px">
+        <span style="font-size: 14px; color: #4A5560">Atividades realizadas</span>
+        <span style="font-size: 32px; font-weight: 700">{{d.feitas}} <span style="font-size: 18px; color: #4A5560; font-weight: 400">de {{d.prev}}</span></span>
+        <span style="font-size: 14px; color: #1E6B3A; font-weight: 700">{{d.pct}}% de participação</span>
+      </div>
+      <div style="background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px">
+        <span style="font-size: 14px; color: #4A5560">No atendimento</span>
+        <span style="font-size: 32px; font-weight: 700">{{d.atend}}</span>
+        <span style="font-size: 14px; color: #4A5560">com mediação</span>
+      </div>
+      <div style="background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px">
+        <span style="font-size: 14px; color: #4A5560">Em casa</span>
+        <span style="font-size: 32px; font-weight: 700">{{d.casa}}</span>
+        <span style="font-size: 14px; color: #4A5560">após lembrete</span>
+      </div>
+      <div style="background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px">
+        <span style="font-size: 14px; color: #4A5560">Tempo médio por atividade</span>
+        <span style="font-size: 32px; font-weight: 700">{{d.tempo}}</span>
+        <span style="font-size: 14px; color: #4A5560">minutos</span>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
+      <section style="flex: 1 1 min(420px, 100%); min-width: 0; background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px">
+          <h2 style="margin: 0; font-size: 18px">Participação: previstas × realizadas</h2>
+          <div style="display: flex; gap: 16px; font-size: 14px; color: #2B333A">
+            <span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; background: #B9D3D6"></span>Previstas</span>
+            <span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; background: #0B5D66"></span>Realizadas</span>
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-end; justify-content: space-around; gap: 8px; height: 200px; border-bottom: 1px solid #C9D1CC; padding: 0 4px">
+          <template data-k="for" list="{{d.bars}}" as="b" hint-placeholder-count="4">
+            <div style="flex: 1; display: flex; align-items: flex-end; justify-content: center; gap: 4px; height: 200px">
+              <div title="{{b.tPrev}}" style="{{b.sPrev}}"></div>
+              <div title="{{b.tFeitas}}" style="{{b.sFeitas}}"></div>
+            </div>
+          </template>
+        </div>
+        <div style="display: flex; justify-content: space-around; gap: 8px; padding: 0 4px; margin-top: -8px">
+          <template data-k="for" list="{{d.bars}}" as="b" hint-placeholder-count="4">
+            <div style="flex: 1; text-align: center; display: flex; flex-direction: column; gap: 2px">
+              <span style="font-size: 14px; font-weight: 700">{{b.label}}</span>
+              <span style="font-size: 13px; color: #4A5560">{{b.feitas}}/{{b.prev}}</span>
+            </div>
+          </template>
+        </div>
+      </section>
+
+      <section style="flex: 1 1 min(340px, 100%); min-width: 0; background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 18px">
+        <h2 style="margin: 0; font-size: 18px">Desempenho por categoria (% de acertos)</h2>
+        <template data-k="for" list="{{d.cats}}" as="c" hint-placeholder-count="3">
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <div style="display: flex; justify-content: space-between; font-size: 15px">
+              <span style="font-weight: 700">{{c.label}}</span>
+              <span><b>{{c.val}}%</b> <span style="color: #4A5560">· início: {{c.ini}}%</span></span>
+            </div>
+            <div style="position: relative; height: 14px; border-radius: 7px; background: #E1E6E2">
+              <div style="{{c.bar}}"></div>
+              <div style="{{c.mark}}"></div>
+            </div>
+          </div>
+        </template>
+        <p style="margin: 0; font-size: 13px; color: #4A5560; line-height: 1.5">A linha escura marca o desempenho no início do acompanhamento. Indicadores a definir com a fonoaudióloga.</p>
+      </section>
+    </div>
+
+    <section style="background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+      <h2 style="margin: 0; font-size: 18px">Observações da profissional</h2>
+      <div style="display: flex; gap: 14px; padding-bottom: 14px; border-bottom: 1px solid #E1E6E2">
+        <div style="font-size: 14px; color: #4A5560; width: 90px; flex-shrink: 0">15/10/2026</div>
+        <div style="font-size: 15px; line-height: 1.5">Boa adesão às atividades em casa. Mais lenta em “Complete a frase”; manter nível fácil por mais duas semanas.</div>
+      </div>
+      <div style="display: flex; gap: 14px">
+        <div style="font-size: 14px; color: #4A5560; width: 90px; flex-shrink: 0">08/10/2026</div>
+        <div style="font-size: 15px; line-height: 1.5">Compreendeu bem o jogo da memória com mediação. Filha vai acompanhar as atividades das 15h.</div>
+      </div>
+    </section>
+
+    <p style="margin: 0; font-size: 13px; color: #4A5560">Dados fictícios para demonstração do protótipo.</p>
+  </main>
+</div>
+</template>
+<div id="dc-root"></div>
+<a class="tc-home" href="../index.html">← Índice</a>
+<script type="text/x-dc" id="dc-logic" data-props='{"$preview":{"width":1280,"height":1240}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { period: '30' };
+    this.data = {
+      '7': { atend: 4, casa: 5, tempo: 6, labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], prev: [2, 1, 2, 2, 2, 1, 2], feitas: [2, 1, 1, 2, 1, 0, 2], cats: [75, 82, 64] },
+      '30': { atend: 16, casa: 18, tempo: 6, labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'], prev: [12, 12, 12, 12], feitas: [7, 8, 10, 9], cats: [71, 80, 60] },
+      '90': { atend: 38, casa: 47, tempo: 7, labels: ['Agosto', 'Setembro', 'Outubro'], prev: [40, 52, 36], feitas: [22, 35, 28], cats: [63, 76, 55] }
+    };
+  }
+  renderVals() {
+    const p = this.state.period;
+    const src = this.data[p];
+    const prev = src.prev.reduce((a, b) => a + b, 0);
+    const feitas = src.feitas.reduce((a, b) => a + b, 0);
+    const max = Math.max.apply(null, src.prev);
+    const w = src.labels.length > 4 ? 18 : 30;
+    const bars = src.labels.map((label, i) => ({
+      label, prev: src.prev[i], feitas: src.feitas[i],
+      tPrev: 'Previstas: ' + src.prev[i], tFeitas: 'Realizadas: ' + src.feitas[i],
+      sPrev: 'width: ' + w + 'px; border-radius: 4px 4px 0 0; background: #B9D3D6; height: ' + Math.round((src.prev[i] / max) * 180) + 'px',
+      sFeitas: 'width: ' + w + 'px; border-radius: 4px 4px 0 0; background: #0B5D66; height: ' + Math.max(2, Math.round((src.feitas[i] / max) * 180)) + 'px'
+    }));
+    const catDefs = [{ label: 'Memória', color: '#0B5D66', ini: 52 }, { label: 'Atenção', color: '#B4430F', ini: 70 }, { label: 'Linguagem', color: '#5B3F9E', ini: 45 }];
+    const cats = catDefs.map((c, i) => ({
+      label: c.label, val: src.cats[i], ini: c.ini,
+      bar: 'height: 14px; border-radius: 7px; background: ' + c.color + '; width: ' + src.cats[i] + '%',
+      mark: 'position: absolute; top: -4px; width: 3px; height: 22px; background: #1B1F23; left: ' + c.ini + '%'
+    }));
+    const opts = [{ id: '7', label: 'Últimos 7 dias' }, { id: '30', label: 'Últimos 30 dias' }, { id: '90', label: 'Últimos 90 dias' }];
+    const periods = opts.map((o) => {
+      const on = o.id === p;
+      return {
+        label: o.label, on: on ? 'true' : 'false',
+        style: 'height: 38px; padding: 0 16px; border-radius: 19px; font-size: 15px; font-weight: 700; border: 1px solid ' + (on ? '#0B5D66' : '#9AA6A0') + '; background: ' + (on ? '#0B5D66' : '#FFFFFF') + '; color: ' + (on ? '#FFFFFF' : '#1B1F23'),
+        pick: () => this.setState({ period: o.id })
+      };
+    });
+    return {
+      periods,
+      d: { prev, feitas, pct: Math.round((feitas / prev) * 100), atend: src.atend, casa: src.casa, tempo: src.tempo, bars, cats }
+    };
+  }
+}
+</script>
+</body>
+</html>
