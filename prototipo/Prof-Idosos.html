@@ -3,25 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <title>TechCare 60+ – Idosos em acompanhamento</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap" rel="stylesheet">
 <style>
 body{margin:0}
 a{color:#0B5D66}a:hover{color:#08434A}
-input:focus{outline:3px solid #0B5D66;outline-offset:1px}
+button{font-family:inherit;cursor:pointer}
+input:focus,button:focus-visible{outline:3px solid #0B5D66;outline-offset:1px}
 </style>
 <style>
 #dc-root{min-height:100vh}
 @media (max-width: 779px){
-  nav[aria-label="Menu principal"]{flex-direction:row !important;flex-wrap:wrap;align-items:center;gap:4px !important;border-right:none !important;border-bottom:1px solid #D5DBD7;padding:10px 12px !important}
-  nav[aria-label="Menu principal"]>div{padding:0 12px 0 4px !important;width:100%}
-  nav[aria-label="Menu principal"]>a{padding:10px 12px !important;margin-top:0 !important}
+  nav[aria-label="Menu principal"]{border-right:none !important;border-bottom:1px solid #D5DBD7;padding:8px 10px !important;gap:0 !important}
+  nav[aria-label="Menu principal"]>div{padding:6px 6px !important}
+  nav[aria-label="Menu principal"] .nav-burger{display:flex !important}
+  nav[aria-label="Menu principal"]>a{display:none !important;margin-top:0 !important}
+  nav[aria-label="Menu principal"] .nav-toggle:checked ~ a{display:flex !important;margin-top:2px}
 }
 @media (max-width: 819px){#dc-root{padding-bottom:64px}}
 .tc-home{position:fixed;right:16px;bottom:16px;z-index:50;font:600 14px/1 system-ui,sans-serif;background:#183236;color:#fff;text-decoration:none;padding:10px 14px;border-radius:999px;opacity:.85}
 .tc-home:hover{opacity:1;color:#fff}
 </style>
+<script src="../assets/store.js"></script>
 <script src="../assets/dc-lite.js"></script>
 
 </head>
@@ -29,12 +34,18 @@ input:focus{outline:3px solid #0B5D66;outline-offset:1px}
 <template id="dc-tpl">
 <div style="min-height: 900px; display: flex; flex-wrap: wrap; background: #F4F6F3; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; color: #1B1F23">
   <nav aria-label="Menu principal" style="flex: 1 1 220px; max-width: 100%; box-sizing: border-box; padding: 28px 18px; background: #FFFFFF; border-right: 1px solid #D5DBD7; display: flex; flex-direction: column; gap: 6px">
-    <div style="display: flex; align-items: center; gap: 10px; padding: 0 10px 22px">
-      <div style="width: 36px; height: 36px; border-radius: 10px; background: #0B5D66; display: flex; align-items: center; justify-content: center">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0 10px 22px">
+      <div style="display: flex; align-items: center; gap: 10px; min-width: 0">
+        <div style="width: 36px; height: 36px; flex-shrink: 0; border-radius: 10px; background: #0B5D66; display: flex; align-items: center; justify-content: center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>
+        </div>
+        <div style="font-size: 19px; font-weight: 700">TechCare 60+</div>
       </div>
-      <div style="font-size: 19px; font-weight: 700">TechCare 60+</div>
+      <label for="navToggle" class="nav-burger" role="button" tabindex="0" aria-label="Abrir ou fechar o menu" style="display: none; flex-shrink: 0; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 10px; border: 1px solid #D5DBD7; background: #FFFFFF; cursor: pointer">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1B1F23" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </label>
     </div>
+    <input type="checkbox" id="navToggle" class="nav-toggle" hidden>
     <a href="Prof-Idosos.html" style="display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 10px; background: #E3F0F1; color: #08434A; font-weight: 700; font-size: 16px; text-decoration: none">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M17 11a3 3 0 1 0 0-6M22 21a6 6 0 0 0-4-5.7"/></svg>
       Idosos
@@ -57,17 +68,17 @@ input:focus{outline:3px solid #0B5D66;outline-offset:1px}
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
       <div style="display: flex; flex-direction: column; gap: 6px">
         <h1 style="margin: 0; font-size: 30px">Idosos em acompanhamento</h1>
-        <p style="margin: 0; font-size: 16px; color: #4A5560">5 idosos · semana de 14 a 20 de outubro · dados fictícios</p>
+        <p style="margin: 0; font-size: 16px; color: #4A5560">{{count}} idosos · semana de 14 a 20 de outubro · dados fictícios</p>
       </div>
-      <a href="Prof-Perfil.html" style="display: flex; align-items: center; gap: 8px; height: 46px; padding: 0 18px; border-radius: 10px; background: #0B5D66; color: #FFFFFF; font-size: 16px; font-weight: 700; text-decoration: none">
+      <button onClick="{{openCadastro}}" style="display: flex; align-items: center; gap: 8px; height: 46px; padding: 0 18px; border-radius: 10px; border: none; background: #0B5D66; color: #FFFFFF; font-size: 16px; font-weight: 700">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
         Cadastrar idoso
-      </a>
+      </button>
     </div>
 
     <div style="display: flex; flex-direction: column; gap: 6px; max-width: 420px">
       <label for="busca" style="font-size: 14px; font-weight: 700">Buscar por nome</label>
-      <input id="busca" type="search" placeholder="Digite o nome do idoso" style="font-family: inherit; font-size: 16px; height: 46px; box-sizing: border-box; padding: 0 14px; border: 1px solid #9AA6A0; border-radius: 10px; background: #FFFFFF">
+      <input id="busca" type="search" onInput="{{onSearch}}" placeholder="Digite o nome do idoso" style="font-family: inherit; font-size: 16px; height: 46px; box-sizing: border-box; padding: 0 14px; border: 1px solid #9AA6A0; border-radius: 10px; background: #FFFFFF">
     </div>
 
     <div style="overflow-x: auto; background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 14px">
@@ -84,8 +95,8 @@ input:focus{outline:3px solid #0B5D66;outline-offset:1px}
         </thead>
         <tbody>
           <template data-k="for" list="{{rows}}" as="r" hint-placeholder-count="5">
-            <tr style="border-top: 1px solid #E1E6E2">
-              <td style="padding: 14px 18px"><a href="Prof-Perfil.html" style="font-weight: 700; text-decoration: none; color: #1B1F23">{{r.nome}}</a></td>
+            <tr data-nome="{{r.q}}" style="border-top: 1px solid #E1E6E2">
+              <td style="padding: 14px 18px"><a href="Prof-Perfil.html" onClick="{{r.go}}" style="font-weight: 700; text-decoration: none; color: #1B1F23">{{r.nome}}</a></td>
               <td style="padding: 14px 18px">{{r.idade}}</td>
               <td style="padding: 14px 18px">{{r.plano}}</td>
               <td style="padding: 14px 18px">
@@ -96,8 +107,8 @@ input:focus{outline:3px solid #0B5D66;outline-offset:1px}
               </td>
               <td style="padding: 14px 18px; color: #4A5560">{{r.ultima}}</td>
               <td style="padding: 14px 18px; white-space: nowrap">
-                <a href="Prof-Perfil.html" style="font-weight: 700; margin-right: 14px">Perfil</a>
-                <a href="Prof-Relatorio.html" style="font-weight: 700">Evolução</a>
+                <a href="Prof-Perfil.html" onClick="{{r.go}}" style="font-weight: 700; margin-right: 14px">Perfil</a>
+                <a href="Prof-Relatorio.html" onClick="{{r.go}}" style="font-weight: 700">Evolução</a>
               </td>
             </tr>
           </template>
@@ -110,26 +121,97 @@ input:focus{outline:3px solid #0B5D66;outline-offset:1px}
       José Pereira não realizou atividades em casa nesta semana. Vale conversar com ele ou com o cuidador no próximo atendimento.
     </div>
   </main>
+
+  <template data-k="if" value="{{modalOpen}}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{closeCadastro}}" style="position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; padding: 16px">
+      <div onClick="{{stop}}" style="width: 100%; max-width: 440px; background: #FFFFFF; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 20px 50px rgba(0,0,0,.3)">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+          <h2 style="margin: 0; font-size: 22px">Cadastrar idoso</h2>
+          <button onClick="{{closeCadastro}}" aria-label="Fechar" style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid #D5DBD7; background: #FFFFFF; font-size: 18px; color: #1B1F23">✕</button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <label for="novoNome" style="font-size: 14px; font-weight: 700">Nome completo</label>
+          <input id="novoNome" placeholder="Ex.: João da Silva" style="font-family: inherit; font-size: 16px; height: 46px; box-sizing: border-box; padding: 0 12px; border: 1px solid #9AA6A0; border-radius: 10px">
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <label for="novoIdade" style="font-size: 14px; font-weight: 700">Idade</label>
+            <input id="novoIdade" type="number" min="0" placeholder="Ex.: 70" style="font-family: inherit; font-size: 16px; height: 46px; box-sizing: border-box; padding: 0 12px; border: 1px solid #9AA6A0; border-radius: 10px">
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <label for="novoPin" style="font-size: 14px; font-weight: 700">PIN (4 números)</label>
+            <input id="novoPin" inputmode="numeric" maxlength="4" placeholder="Ex.: 1234" style="font-family: inherit; font-size: 16px; height: 46px; box-sizing: border-box; padding: 0 12px; border: 1px solid #9AA6A0; border-radius: 10px">
+          </div>
+        </div>
+        <p id="novoErro" style="margin: 0; font-size: 14px; color: #B4430F; min-height: 18px" aria-live="polite"></p>
+        <div style="display: flex; justify-content: flex-end; gap: 10px">
+          <button onClick="{{closeCadastro}}" style="height: 46px; padding: 0 18px; border-radius: 10px; border: 1px solid #9AA6A0; background: #FFFFFF; font-size: 16px; font-weight: 700; color: #1B1F23">Cancelar</button>
+          <button onClick="{{salvarCadastro}}" style="height: 46px; padding: 0 18px; border-radius: 10px; border: none; background: #0B5D66; color: #FFFFFF; font-size: 16px; font-weight: 700">Cadastrar</button>
+        </div>
+      </div>
+    </div>
+  </template>
 </div>
 </template>
 <div id="dc-root"></div>
-<a class="tc-home" href="../index.html">← Índice</a>
+<a class="tc-home" href="../index.html">Início</a>
 <script type="text/x-dc" id="dc-logic" data-props='{"$preview":{"width":1280,"height":900}}'>
 class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { modalOpen: false };
+  }
+  norm(s) {
+    s = (s || '').toLowerCase();
+    try { s = s.normalize('NFD').replace(/[̀-ͯ]/g, ''); } catch (e) { }
+    return s;
+  }
   renderVals() {
-    const data = [
-      { nome: 'Maria Aparecida Souza', idade: '72 anos', plano: '3 atividades', feitas: 9, prev: 12, ultima: 'Hoje, 10:42' },
-      { nome: 'José Pereira', idade: '82 anos', plano: '2 atividades', feitas: 2, prev: 8, ultima: '15/10, no atendimento' },
-      { nome: 'Ana Lúcia Martins', idade: '71 anos', plano: '4 atividades', feitas: 14, prev: 16, ultima: 'Ontem, 16:05' },
-      { nome: 'Antônio Carlos Lima', idade: '85 anos', plano: '2 atividades', feitas: 6, prev: 8, ultima: 'Hoje, 09:15' },
-      { nome: 'Helena Rocha', idade: '69 anos', plano: '3 atividades', feitas: 7, prev: 12, ultima: '18/10, em casa' }
-    ];
-    const rows = data.map((d) => {
-      const pct = Math.round((d.feitas / d.prev) * 100);
+    const self = this;
+    const idosos = window.TC ? TC.all() : [];
+    const rows = idosos.map(function (d) {
+      const pct = d.prev ? Math.round((d.feitas / d.prev) * 100) : 0;
       const color = pct >= 70 ? '#1E6B3A' : (pct >= 40 ? '#B88A00' : '#B4430F');
-      return { ...d, part: d.feitas + ' de ' + d.prev, bar: 'height: 10px; border-radius: 5px; width: ' + pct + '%; background: ' + color };
+      const idadeTxt = (d.idade !== '' && d.idade != null) ? (d.idade + ' anos') : '—';
+      return {
+        nome: d.nome, idade: idadeTxt,
+        plano: (d.plano ? d.plano.length : 0) + ' atividades',
+        part: d.feitas + ' de ' + d.prev,
+        bar: 'height: 10px; border-radius: 5px; width: ' + pct + '%; background: ' + color,
+        ultima: d.ultima || '—',
+        q: self.norm(d.nome),
+        go: function () { if (window.TC) TC.setCurrent(d.id); }
+      };
     });
-    return { rows };
+    return {
+      count: rows.length,
+      rows: rows,
+      modalOpen: this.state.modalOpen,
+      stop: function (e) { if (e) e.stopPropagation(); },
+      openCadastro: function () { self.setState({ modalOpen: true }); },
+      closeCadastro: function () { self.setState({ modalOpen: false }); },
+      onSearch: function (e) {
+        const q = self.norm(e && e.target ? e.target.value : '').trim();
+        const trs = document.querySelectorAll('tr[data-nome]');
+        for (let i = 0; i < trs.length; i++) {
+          const nome = trs[i].getAttribute('data-nome') || '';
+          trs[i].style.display = (nome.indexOf(q) >= 0) ? '' : 'none';
+        }
+      },
+      salvarCadastro: function () {
+        const nomeEl = document.getElementById('novoNome');
+        const idadeEl = document.getElementById('novoIdade');
+        const pinEl = document.getElementById('novoPin');
+        const erro = document.getElementById('novoErro');
+        const nome = (nomeEl && nomeEl.value ? nomeEl.value : '').trim();
+        const idadeRaw = (idadeEl && idadeEl.value ? idadeEl.value : '').trim();
+        const pin = (pinEl && pinEl.value ? pinEl.value : '').trim();
+        if (!nome) { if (erro) erro.textContent = 'Informe o nome do idoso.'; return; }
+        const idadeNum = idadeRaw ? Number(idadeRaw) : '';
+        if (window.TC) TC.add({ nome: nome, idade: (idadeRaw && !isNaN(idadeNum)) ? idadeNum : '', pin: pin });
+        self.setState({ modalOpen: false });
+      }
+    };
   }
 }
 </script>

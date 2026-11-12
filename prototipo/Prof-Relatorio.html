@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <title>TechCare 60+ – Evolução e relatório</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap" rel="stylesheet">
@@ -14,15 +15,24 @@ button:focus-visible{outline:3px solid #0B5D66;outline-offset:1px}
 </style>
 <style>
 #dc-root{min-height:100vh}
+div[role="tablist"]>a{flex:0 0 auto;white-space:nowrap}
 @media (max-width: 779px){
-  nav[aria-label="Menu principal"]{flex-direction:row !important;flex-wrap:wrap;align-items:center;gap:4px !important;border-right:none !important;border-bottom:1px solid #D5DBD7;padding:10px 12px !important}
-  nav[aria-label="Menu principal"]>div{padding:0 12px 0 4px !important;width:100%}
-  nav[aria-label="Menu principal"]>a{padding:10px 12px !important;margin-top:0 !important}
+  nav[aria-label="Menu principal"]{border-right:none !important;border-bottom:1px solid #D5DBD7;padding:8px 10px !important;gap:0 !important}
+  nav[aria-label="Menu principal"]>div{padding:6px 6px !important}
+  nav[aria-label="Menu principal"] .nav-burger{display:flex !important}
+  nav[aria-label="Menu principal"]>a{display:none !important;margin-top:0 !important}
+  nav[aria-label="Menu principal"] .nav-toggle:checked ~ a{display:flex !important;margin-top:2px}
+  div[role="tablist"]>a{padding-left:12px !important;padding-right:12px !important}
 }
 @media (max-width: 819px){#dc-root{padding-bottom:64px}}
 .tc-home{position:fixed;right:16px;bottom:16px;z-index:50;font:600 14px/1 system-ui,sans-serif;background:#183236;color:#fff;text-decoration:none;padding:10px 14px;border-radius:999px;opacity:.85}
 .tc-home:hover{opacity:1;color:#fff}
+@media print{
+  nav[aria-label="Menu principal"],.tc-home,button{display:none !important}
+  main{padding:0 !important}
+}
 </style>
+<script src="../assets/store.js"></script>
 <script src="../assets/dc-lite.js"></script>
 
 </head>
@@ -30,12 +40,18 @@ button:focus-visible{outline:3px solid #0B5D66;outline-offset:1px}
 <template id="dc-tpl">
 <div style="min-height: 1240px; display: flex; flex-wrap: wrap; background: #F4F6F3; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; color: #1B1F23">
   <nav aria-label="Menu principal" style="flex: 1 1 220px; max-width: 100%; box-sizing: border-box; padding: 28px 18px; background: #FFFFFF; border-right: 1px solid #D5DBD7; display: flex; flex-direction: column; gap: 6px">
-    <div style="display: flex; align-items: center; gap: 10px; padding: 0 10px 22px">
-      <div style="width: 36px; height: 36px; border-radius: 10px; background: #0B5D66; display: flex; align-items: center; justify-content: center">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0 10px 22px">
+      <div style="display: flex; align-items: center; gap: 10px; min-width: 0">
+        <div style="width: 36px; height: 36px; flex-shrink: 0; border-radius: 10px; background: #0B5D66; display: flex; align-items: center; justify-content: center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>
+        </div>
+        <div style="font-size: 19px; font-weight: 700">TechCare 60+</div>
       </div>
-      <div style="font-size: 19px; font-weight: 700">TechCare 60+</div>
+      <label for="navToggle" class="nav-burger" role="button" tabindex="0" aria-label="Abrir ou fechar o menu" style="display: none; flex-shrink: 0; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 10px; border: 1px solid #D5DBD7; background: #FFFFFF; cursor: pointer">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1B1F23" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </label>
     </div>
+    <input type="checkbox" id="navToggle" class="nav-toggle" hidden>
     <a href="Prof-Idosos.html" style="display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 10px; color: #2B333A; font-size: 16px; text-decoration: none">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M17 11a3 3 0 1 0 0-6M22 21a6 6 0 0 0-4-5.7"/></svg>
       Idosos
@@ -55,22 +71,22 @@ button:focus-visible{outline:3px solid #0B5D66;outline-offset:1px}
   </nav>
 
   <main style="flex: 999 1 560px; min-width: 0; box-sizing: border-box; padding: clamp(16px, 4vw, 32px) clamp(16px, 4vw, 40px); display: flex; flex-direction: column; gap: 22px">
-    <div style="font-size: 15px; color: #4A5560"><a href="Prof-Idosos.html">Idosos</a> › <a href="Prof-Perfil.html">Maria Aparecida Souza</a> › Evolução</div>
+    <div style="font-size: 15px; color: #4A5560"><a href="Prof-Idosos.html">Idosos</a> › <a href="Prof-Perfil.html">{{nome}}</a> › Evolução</div>
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px">
-      <h1 style="margin: 0; font-size: 28px">Evolução – Maria</h1>
+      <h1 style="margin: 0; font-size: 28px">Evolução – {{primeiro}}</h1>
       <div style="display: flex; flex-wrap: wrap; gap: 10px">
-        <button style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 10px; border: 1px solid #9AA6A0; background: #FFFFFF; font-size: 15px; font-weight: 700; color: #1B1F23">
+        <button onClick="{{abrirObs}}" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 10px; border: 1px solid #9AA6A0; background: #FFFFFF; font-size: 15px; font-weight: 700; color: #1B1F23">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1B1F23" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
           Adicionar observação
         </button>
-        <button style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 10px; border: none; background: #0B5D66; font-size: 15px; font-weight: 700; color: #FFFFFF">
+        <button onClick="{{exportarPDF}}" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 10px; border: none; background: #0B5D66; font-size: 15px; font-weight: 700; color: #FFFFFF">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
           Exportar PDF
         </button>
       </div>
     </div>
 
-    <div role="tablist" style="display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 2px solid #D5DBD7">
+    <div role="tablist" style="display: flex; flex-wrap: nowrap; gap: 4px; overflow-x: auto; border-bottom: 2px solid #D5DBD7">
       <a href="Prof-Perfil.html" style="padding: 12px 18px; font-size: 16px; color: #2B333A; text-decoration: none">Perfil</a>
       <a href="Prof-Plano.html" style="padding: 12px 18px; font-size: 16px; color: #2B333A; text-decoration: none">Plano de atividades</a>
       <a href="Prof-Relatorio.html" style="padding: 12px 18px; font-size: 16px; font-weight: 700; color: #08434A; border-bottom: 3px solid #0B5D66; margin-bottom: -2px; text-decoration: none">Evolução</a>
@@ -153,34 +169,67 @@ button:focus-visible{outline:3px solid #0B5D66;outline-offset:1px}
 
     <section style="background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
       <h2 style="margin: 0; font-size: 18px">Observações da profissional</h2>
-      <div style="display: flex; gap: 14px; padding-bottom: 14px; border-bottom: 1px solid #E1E6E2">
-        <div style="font-size: 14px; color: #4A5560; width: 90px; flex-shrink: 0">15/10/2026</div>
-        <div style="font-size: 15px; line-height: 1.5">Boa adesão às atividades em casa. Mais lenta em “Complete a frase”; manter nível fácil por mais duas semanas.</div>
-      </div>
-      <div style="display: flex; gap: 14px">
-        <div style="font-size: 14px; color: #4A5560; width: 90px; flex-shrink: 0">08/10/2026</div>
-        <div style="font-size: 15px; line-height: 1.5">Compreendeu bem o jogo da memória com mediação. Filha vai acompanhar as atividades das 15h.</div>
-      </div>
+      <template data-k="for" list="{{notas}}" as="n" hint-placeholder-count="2">
+        <div style="display: flex; gap: 14px; padding-bottom: 14px; border-bottom: 1px solid #E1E6E2">
+          <div style="font-size: 14px; color: #4A5560; width: 90px; flex-shrink: 0">{{n.data}}</div>
+          <div style="font-size: 15px; line-height: 1.5">{{n.texto}}</div>
+        </div>
+      </template>
+      <template data-k="if" value="{{semNotas}}" hint-placeholder-val="{{ false }}">
+        <div style="font-size: 15px; color: #4A5560">Nenhuma observação registrada ainda. Use “Adicionar observação”.</div>
+      </template>
     </section>
 
     <p style="margin: 0; font-size: 13px; color: #4A5560">Dados fictícios para demonstração do protótipo.</p>
   </main>
+
+  <template data-k="if" value="{{adding}}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{cancelObs}}" style="position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; padding: 16px">
+      <div onClick="{{stop}}" style="width: 100%; max-width: 520px; background: #FFFFFF; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 20px 50px rgba(0,0,0,.3)">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+          <h2 style="margin: 0; font-size: 20px">Nova observação sobre {{primeiro}}</h2>
+          <button onClick="{{cancelObs}}" aria-label="Fechar" style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid #D5DBD7; background: #FFFFFF; font-size: 18px; color: #1B1F23">✕</button>
+        </div>
+        <textarea id="novaObs" rows="4" placeholder="Escreva aqui a evolução, orientações ou combinados..." style="font-family: inherit; font-size: 15px; line-height: 1.45; box-sizing: border-box; padding: 10px 12px; border: 1px solid #9AA6A0; border-radius: 10px; resize: vertical"></textarea>
+        <div style="display: flex; justify-content: flex-end; gap: 10px">
+          <button onClick="{{cancelObs}}" style="height: 44px; padding: 0 18px; border-radius: 10px; border: 1px solid #9AA6A0; background: #FFFFFF; font-size: 15px; font-weight: 700; color: #1B1F23">Cancelar</button>
+          <button onClick="{{salvarObs}}" style="height: 44px; padding: 0 18px; border-radius: 10px; border: none; background: #0B5D66; color: #FFFFFF; font-size: 15px; font-weight: 700">Salvar observação</button>
+        </div>
+      </div>
+    </div>
+  </template>
 </div>
 </template>
 <div id="dc-root"></div>
-<a class="tc-home" href="../index.html">← Índice</a>
+<a class="tc-home" href="../index.html">Início</a>
 <script type="text/x-dc" id="dc-logic" data-props='{"$preview":{"width":1280,"height":1240}}'>
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { period: '30' };
+    this.idoso = (window.TC ? TC.current() : null) || { id: 'maria', nome: 'Maria Aparecida Souza', notas: [] };
+    this.state = { period: '30', adding: false };
     this.data = {
       '7': { atend: 4, casa: 5, tempo: 6, labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], prev: [2, 1, 2, 2, 2, 1, 2], feitas: [2, 1, 1, 2, 1, 0, 2], cats: [75, 82, 64] },
       '30': { atend: 16, casa: 18, tempo: 6, labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'], prev: [12, 12, 12, 12], feitas: [7, 8, 10, 9], cats: [71, 80, 60] },
       '90': { atend: 38, casa: 47, tempo: 7, labels: ['Agosto', 'Setembro', 'Outubro'], prev: [40, 52, 36], feitas: [22, 35, 28], cats: [63, 76, 55] }
     };
   }
+  hoje() {
+    try {
+      const d = new Date();
+      const z = (n) => (n < 10 ? '0' : '') + n;
+      return z(d.getDate()) + '/' + z(d.getMonth() + 1) + '/' + d.getFullYear();
+    } catch (e) { return 'Hoje'; }
+  }
+  salvarObs() {
+    const el = document.getElementById('novaObs');
+    const texto = (el && el.value ? el.value : '').trim();
+    if (!texto) { if (el) el.focus(); return; }
+    if (window.TC) TC.addNota(this.idoso.id, texto, this.hoje());
+    this.setState({ adding: false });
+  }
   renderVals() {
+    const self = this;
     const p = this.state.period;
     const src = this.data[p];
     const prev = src.prev.reduce((a, b) => a + b, 0);
@@ -208,8 +257,20 @@ class Component extends DCLogic {
         pick: () => this.setState({ period: o.id })
       };
     });
+    const idosoAtual = (window.TC ? TC.get(this.idoso.id) : null) || this.idoso;
+    const nome = idosoAtual.nome || 'Idoso';
+    const primeiro = (nome.trim().split(/\s+/)[0]) || nome;
+    const notas = idosoAtual.notas || [];
     return {
       periods,
+      nome: nome, primeiro: primeiro,
+      notas: notas, semNotas: notas.length === 0,
+      adding: this.state.adding,
+      stop: function (e) { if (e) e.stopPropagation(); },
+      abrirObs: function () { self.setState({ adding: true }); },
+      cancelObs: function () { self.setState({ adding: false }); },
+      salvarObs: function () { self.salvarObs(); },
+      exportarPDF: function () { try { window.print(); } catch (e) { } },
       d: { prev, feitas, pct: Math.round((feitas / prev) * 100), atend: src.atend, casa: src.casa, tempo: src.tempo, bars, cats }
     };
   }
