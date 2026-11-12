@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <title>TechCare 60+ – Digitar PIN</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap" rel="stylesheet">
@@ -62,7 +63,7 @@ body{background:#DDE3DF}
   </div>
 
   <template data-k="if" value="{{complete}}" hint-placeholder-val="{{ false }}">
-    <a href="Idoso-Hoje.html" style="display: flex; align-items: center; justify-content: center; gap: 12px; width: clamp(269px, 62.50vw, 480px); height: clamp(54px, 12.50vw, 96px); border-radius: 50%; background: #0B5D66; color: #FFFFFF; font-size: clamp(22px, 4.43vw, 34px); font-weight: 700; text-decoration: none">
+    <a href="Idoso-Hoje.html" style="display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; max-width: 480px; height: clamp(54px, 12.50vw, 96px); border-radius: 16px; background: #0B5D66; color: #FFFFFF; font-size: clamp(22px, 4.43vw, 34px); font-weight: 700; text-decoration: none">
       Entrar
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
@@ -73,7 +74,7 @@ body{background:#DDE3DF}
 </div>
 </template>
 <div id="dc-root"></div>
-<a class="tc-home" href="../index.html">← Índice</a>
+<a class="tc-home" href="../index.html">Início</a>
 <script type="text/x-dc" id="dc-logic" data-props='{"$preview":{"width":768,"height":1024}}'>
 class Component extends DCLogic {
   constructor(props) {

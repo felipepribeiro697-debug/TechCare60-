@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <title>TechCare 60+ – Escolher perfil</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap" rel="stylesheet">
@@ -27,14 +28,14 @@ body{background:#DDE3DF}
 <body>
 <template id="dc-tpl">
 <div style="width: 100%; max-width: 768px; min-height: 100vh; margin: 0 auto; box-sizing: border-box; padding: clamp(16px, 6.25vw, 48px) clamp(16px, 7.29vw, 56px); display: flex; flex-direction: column; gap: 40px; background: #F4F6F3; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; color: #1B1F23">
-  <div style="display: flex; justify-content: space-between; align-items: center">
-    <div style="display: flex; align-items: center; gap: 14px">
-      <div style="width: 52px; height: 52px; border-radius: 16px; background: #0B5D66; display: flex; align-items: center; justify-content: center">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 16px">
+    <div style="display: flex; align-items: center; gap: 14px; flex-shrink: 0">
+      <div style="width: 52px; height: 52px; flex-shrink: 0; border-radius: 16px; background: #0B5D66; display: flex; align-items: center; justify-content: center">
         <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/><path d="M8 12h2l1.5-2.5L13 14l1.5-2H16"/></svg>
       </div>
-      <div style="font-size: clamp(18px, 3.65vw, 28px); font-weight: 700">TechCare 60+</div>
+      <div style="font-size: clamp(18px, 3.65vw, 28px); font-weight: 700; white-space: nowrap">TechCare 60+</div>
     </div>
-    <div style="font-size: 22px; color: #4A5560">Terça-feira, 20 de outubro</div>
+    <div style="font-size: clamp(15px, 3.2vw, 22px); color: #4A5560">Terça-feira, 20 de outubro</div>
   </div>
 
   <div style="display: flex; flex-direction: column; gap: 12px">
@@ -71,7 +72,7 @@ body{background:#DDE3DF}
 </div>
 </template>
 <div id="dc-root"></div>
-<a class="tc-home" href="../index.html">← Índice</a>
+<a class="tc-home" href="../index.html">Início</a>
 <script type="text/x-dc" id="dc-logic" data-props='{"$preview":{"width":768,"height":1024}}'>
 class Component extends DCLogic {
   renderVals() {
