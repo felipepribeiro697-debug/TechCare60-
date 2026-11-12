@@ -10,10 +10,19 @@ Trabalho da disciplina **Engenharia de Requisitos** (CEUB).
 
 | Pasta / arquivo | Conteúdo |
 |---|---|
-| `index.html` | Página inicial com acesso a todas as telas |
+| `index.html` | Tela de acesso: escolha entre entrar como **idoso** ou como **administrador** |
 | `prototipo/` | 12 telas navegáveis: 7 do app da pessoa idosa (tablet) e 5 da área do profissional (web) |
 | `assets/dc-lite.js` | Script que monta as telas e cuida das interações |
 | `assets/telas/` | Imagens PNG de cada tela |
+
+### Como navegar
+
+A página inicial (`index.html`) é a **tela de acesso** com dois caminhos. Cada um leva ao seu próprio login e segue como um app de verdade — não há mais galeria de miniaturas:
+
+- **Sou idoso** → escolher perfil → PIN (4 números quaisquer) → atividades do dia.
+- **Sou administrador** → login do profissional → idosos, planos e relatórios.
+
+O botão flutuante **Início** (canto inferior) volta para a tela de acesso a qualquer momento, útil para trocar de perfil durante a apresentação.
 
 ### Telas
 
