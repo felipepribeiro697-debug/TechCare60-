@@ -8,13 +8,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap" rel="stylesheet">
 <style>
-body{margin:0}
+body{margin:0;background:#F4F6F3}
 a{color:#0B5D66}a:hover{color:#08434A}
 button{font-family:inherit;cursor:pointer}
 button:focus-visible{outline:3px solid #0B5D66;outline-offset:1px}
 </style>
 <style>
 #dc-root{min-height:100vh}
+@media (min-width: 780px){#dc-root>div{height:100vh;overflow:hidden}#dc-root main{overflow-y:auto;min-height:0}}
+@media (max-width: 779px){#dc-root>div{flex-wrap:wrap}}
 div[role="tablist"]>a{flex:0 0 auto;white-space:nowrap}
 @media (max-width: 779px){
   nav[aria-label="Menu principal"]{border-right:none !important;border-bottom:1px solid #D5DBD7;padding:8px 10px !important;gap:0 !important}
@@ -22,6 +24,7 @@ div[role="tablist"]>a{flex:0 0 auto;white-space:nowrap}
   nav[aria-label="Menu principal"] .nav-burger{display:flex !important}
   nav[aria-label="Menu principal"]>a{display:none !important;margin-top:0 !important}
   nav[aria-label="Menu principal"] .nav-toggle:checked ~ a{display:flex !important;margin-top:2px}
+  div[role="tablist"]{overflow-x:auto}
   div[role="tablist"]>a{padding-left:12px !important;padding-right:12px !important}
 }
 @media (max-width: 819px){#dc-root{padding-bottom:64px}}
@@ -38,7 +41,7 @@ div[role="tablist"]>a{flex:0 0 auto;white-space:nowrap}
 </head>
 <body>
 <template id="dc-tpl">
-<div style="min-height: 1240px; display: flex; flex-wrap: wrap; background: #F4F6F3; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; color: #1B1F23">
+<div style="display: flex; background: #F4F6F3; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; color: #1B1F23">
   <nav aria-label="Menu principal" style="flex: 1 1 220px; max-width: 100%; box-sizing: border-box; padding: 28px 18px; background: #FFFFFF; border-right: 1px solid #D5DBD7; display: flex; flex-direction: column; gap: 6px">
     <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0 10px 22px">
       <div style="display: flex; align-items: center; gap: 10px; min-width: 0">
@@ -86,7 +89,7 @@ div[role="tablist"]>a{flex:0 0 auto;white-space:nowrap}
       </div>
     </div>
 
-    <div role="tablist" style="display: flex; flex-wrap: nowrap; gap: 4px; overflow-x: auto; border-bottom: 2px solid #D5DBD7">
+    <div role="tablist" style="display: flex; flex-wrap: nowrap; gap: 4px; border-bottom: 2px solid #D5DBD7">
       <a href="Prof-Perfil.html" style="padding: 12px 18px; font-size: 16px; color: #2B333A; text-decoration: none">Perfil</a>
       <a href="Prof-Plano.html" style="padding: 12px 18px; font-size: 16px; color: #2B333A; text-decoration: none">Plano de atividades</a>
       <a href="Prof-Relatorio.html" style="padding: 12px 18px; font-size: 16px; font-weight: 700; color: #08434A; border-bottom: 3px solid #0B5D66; margin-bottom: -2px; text-decoration: none">Evolução</a>
