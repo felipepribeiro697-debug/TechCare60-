@@ -14,7 +14,6 @@ input:focus{outline:3px solid #0B5D66;outline-offset:1px}
 </style>
 <style>
 #dc-root{min-height:100vh}
-@media (max-width: 819px){#dc-root{padding-bottom:64px}}
 .tc-home{position:fixed;right:16px;bottom:16px;z-index:50;font:600 14px/1 system-ui,sans-serif;background:#183236;color:#fff;text-decoration:none;padding:10px 14px;border-radius:999px;opacity:.85}
 .tc-home:hover{opacity:1;color:#fff}
 </style>
@@ -23,8 +22,8 @@ input:focus{outline:3px solid #0B5D66;outline-offset:1px}
 </head>
 <body>
 <template id="dc-tpl">
-<div style="min-height: 100vh; box-sizing: border-box; padding: 48px 20px; display: flex; align-items: center; justify-content: center; background: #F4F6F3; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; color: #1B1F23">
-  <div style="width: 100%; max-width: 440px; display: flex; flex-direction: column; gap: 28px">
+<div style="min-height: 100vh; min-height: 100dvh; box-sizing: border-box; padding: clamp(14px, 3.5vw, 48px) 20px; display: flex; align-items: center; justify-content: center; background: #F4F6F3; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; color: #1B1F23">
+  <div style="width: 100%; max-width: 440px; display: flex; flex-direction: column; gap: clamp(12px, 3vw, 28px)">
     <div style="display: flex; align-items: center; gap: 12px; justify-content: center">
       <div style="width: 44px; height: 44px; border-radius: 12px; background: #0B5D66; display: flex; align-items: center; justify-content: center">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/><path d="M8 12h2l1.5-2.5L13 14l1.5-2H16"/></svg>
@@ -32,7 +31,7 @@ input:focus{outline:3px solid #0B5D66;outline-offset:1px}
       <div style="font-size: 24px; font-weight: 700">TechCare 60+</div>
     </div>
 
-    <div style="background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 16px; padding: 36px; display: flex; flex-direction: column; gap: 20px">
+    <div style="background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 16px; padding: clamp(20px, 5vw, 36px); display: flex; flex-direction: column; gap: clamp(12px, 3vw, 20px)">
       <div style="display: flex; flex-direction: column; gap: 6px">
         <h1 style="margin: 0; font-size: 26px">Área do profissional</h1>
         <p style="margin: 0; font-size: 16px; color: #4A5560">Entre para acompanhar os idosos sob seus cuidados.</p>
