@@ -34,7 +34,7 @@ body{background:#DDE3DF}
       <svg width="26" height="26" viewBox="0 0 24 24" fill="#1B1F23" stroke="none" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
       Pausar
     </a>
-    <button aria-label="Ouvir a explicação" style="font-family: inherit; display: flex; align-items: center; gap: 10px; height: 60px; padding: 0 20px; border-radius: 16px; border: 2px solid #C9D1CC; background: #FFFFFF; font-size: clamp(18px, 3.12vw, 24px); font-weight: 700; color: #1B1F23">
+    <button onClick="{{ouvir}}" aria-label="Ouvir a explicação" style="font-family: inherit; display: flex; align-items: center; gap: 10px; height: 60px; padding: 0 20px; border-radius: 16px; border: 2px solid #C9D1CC; background: #FFFFFF; font-size: clamp(18px, 3.12vw, 24px); font-weight: 700; color: #1B1F23">
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1B1F23" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
       Ouvir
     </button>
@@ -99,7 +99,23 @@ class Component extends DCLogic {
     this.words = { sol: 'SOL', casa: 'CASA', flor: 'FLOR', coracao: 'CORAÇÃO' };
     this.state = { open: [], matched: [], lastMiss: false };
   }
-  componentWillUnmount() { clearTimeout(this.timer); }
+  componentWillUnmount() { clearTimeout(this.timer); try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { } }
+  ouvir() {
+    try {
+      const synth = window.speechSynthesis;
+      if (!synth) return;
+      if (synth.speaking) { synth.cancel(); return; }
+      const root = document.getElementById('dc-root');
+      let txt = root ? (root.innerText || root.textContent || '') : '';
+      txt = txt.replace(/Ouvir/gi, ' ').replace(/Pausar/gi, ' ').replace(/Início/gi, ' ').replace(/\s+/g, ' ').trim();
+      if (!txt) return;
+      const u = new SpeechSynthesisUtterance(txt);
+      u.lang = 'pt-BR';
+      u.rate = 0.95;
+      synth.cancel();
+      synth.speak(u);
+    } catch (e) { }
+  }
   flip(i) {
     const { open, matched } = this.state;
     if (open.length >= 2 || open.includes(i) || matched.includes(i)) return;
@@ -138,7 +154,8 @@ class Component extends DCLogic {
     else if (open.length === 2) hint = 'Essas são diferentes. Elas vão virar de novo.';
     else if (lastMiss) hint = 'Tudo bem! Tente outra vez.';
     else if (found > 0) hint = 'Você achou um par! Continue assim.';
-    return { cards, found, done: found === 4, playing: found < 4, hint };
+    const self = this;
+    return { cards, found, done: found === 4, playing: found < 4, hint, ouvir: function () { self.ouvir(); } };
   }
 }
 </script>
