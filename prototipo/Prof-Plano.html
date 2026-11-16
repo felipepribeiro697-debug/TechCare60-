@@ -15,7 +15,7 @@ button:focus-visible{outline:3px solid #0B5D66;outline-offset:1px}
 </style>
 <style>
 #dc-root{min-height:100vh}
-@media (min-width: 780px){#dc-root>div{height:100vh;overflow:hidden}#dc-root main{overflow-y:auto;min-height:0}}
+@media (min-width: 780px){#dc-root>div{height:100vh;overflow:hidden}#dc-root main{overflow:hidden;min-height:0}}
 @media (max-width: 779px){#dc-root>div{flex-wrap:wrap}}
 div[role="tablist"]>a{flex:0 0 auto;white-space:nowrap}
 @media (max-width: 779px){
@@ -79,8 +79,8 @@ div[role="tablist"]>a{flex:0 0 auto;white-space:nowrap}
       <a href="Prof-Relatorio.html" style="padding: 12px 18px; font-size: 16px; color: #2B333A; text-decoration: none">Evolução</a>
     </div>
 
-    <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
-      <section id="catCard" style="flex: 1 1 min(380px, 100%); min-width: 0; background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch; flex: 1 1 0; min-height: 0">
+      <section id="catCard" style="flex: 1 1 min(380px, 100%); min-width: 0; min-height: 0; background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
         <div style="display: flex; flex-direction: column; gap: 4px">
           <h2 style="margin: 0; font-size: 19px">Catálogo</h2>
           <p style="margin: 0; font-size: 14px; color: #4A5560">Sugestões iniciais, a validar com a fonoaudióloga.</p>
@@ -90,6 +90,7 @@ div[role="tablist"]>a{flex:0 0 auto;white-space:nowrap}
             <button onClick="{{ch.pick}}" aria-pressed="{{ch.on}}" style="{{ch.style}}">{{ch.label}}</button>
           </template>
         </div>
+        <div id="catScroll" style="flex: 1 1 0; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 4px">
         <template data-k="for" list="{{catalog}}" as="a" hint-placeholder-count="6">
           <div style="display: flex; align-items: center; gap: 14px; padding: 12px; border: 1px solid #E1E6E2; border-radius: 12px">
             <div style="{{a.dot}}"></div>
@@ -108,14 +109,15 @@ div[role="tablist"]>a{flex:0 0 auto;white-space:nowrap}
             </template>
           </div>
         </template>
+        </div>
       </section>
 
-      <section id="planCard" style="flex: 1 1 min(420px, 100%); min-width: 0; background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+      <section id="planCard" style="flex: 1 1 min(420px, 100%); min-width: 0; min-height: 0; background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
         <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px">
           <h2 style="margin: 0; font-size: 19px">Plano atual</h2>
           <span style="font-size: 14px; color: #4A5560">{{count}} atividades</span>
         </div>
-        <div id="planScroll" style="display: flex; flex-direction: column; gap: 12px; overflow-y: auto; min-height: 0; flex: 1 1 auto; padding-right: 4px">
+        <div id="planScroll" style="display: flex; flex-direction: column; gap: 12px; overflow-y: auto; min-height: 0; flex: 1 1 0; padding-right: 4px">
         <template data-k="for" list="{{plan}}" as="p" hint-placeholder-count="3">
           <div style="border: 1px solid #D5DBD7; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
             <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
@@ -172,30 +174,8 @@ class Component extends DCLogic {
     ];
   }
   dot(cat) { return 'width: 14px; height: 14px; flex-shrink: 0; border-radius: 7px; background: ' + this.cats[cat].color; }
-  syncHeights() {
-    const cat = document.getElementById('catCard');
-    const plan = document.getElementById('planCard');
-    if (!cat || !plan) return;
-    if (window.innerWidth < 780) { plan.style.height = ''; plan.style.maxHeight = ''; return; }
-    plan.style.boxSizing = 'border-box';
-    const h = cat.offsetHeight;
-    plan.style.height = h + 'px';
-    plan.style.maxHeight = h + 'px';
-  }
-  componentDidMount() {
-    const self = this;
-    this.syncHeights();
-    this._onResize = function () { self.syncHeights(); };
-    window.addEventListener('resize', this._onResize);
-    setTimeout(function () { self.syncHeights(); }, 300);
-    try { if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { self.syncHeights(); }); } catch (e) { }
-  }
-  componentWillUnmount() {
-    if (this._onResize) window.removeEventListener('resize', this._onResize);
-  }
   renderVals() {
     const { filter, plan } = this.state;
-    if (typeof requestAnimationFrame === 'function') requestAnimationFrame(() => this.syncHeights());
     const nome = this.idoso.nome || 'Idoso';
     const primeiro = (nome.trim().split(/\s+/)[0]) || nome;
     const chipDefs = [{ id: 'todas', label: 'Todas' }, { id: 'mem', label: 'Memória' }, { id: 'at', label: 'Atenção' }, { id: 'lin', label: 'Linguagem' }];

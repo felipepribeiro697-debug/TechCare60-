@@ -170,17 +170,19 @@ div[role="tablist"]>a{flex:0 0 auto;white-space:nowrap}
       </section>
     </div>
 
-    <section style="background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+    <section style="background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 14px; flex: 1 1 0; min-height: 140px; overflow: hidden">
       <h2 style="margin: 0; font-size: 18px">Observações da profissional</h2>
-      <template data-k="for" list="{{notas}}" as="n" hint-placeholder-count="2">
-        <div style="display: flex; gap: 14px; padding-bottom: 14px; border-bottom: 1px solid #E1E6E2">
-          <div style="font-size: 14px; color: #4A5560; width: 90px; flex-shrink: 0">{{n.data}}</div>
-          <div style="font-size: 15px; line-height: 1.5">{{n.texto}}</div>
-        </div>
-      </template>
-      <template data-k="if" value="{{semNotas}}" hint-placeholder-val="{{ false }}">
-        <div style="font-size: 15px; color: #4A5560">Nenhuma observação registrada ainda. Use “Adicionar observação”.</div>
-      </template>
+      <div style="flex: 1 1 0; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; padding-right: 4px">
+        <template data-k="for" list="{{notas}}" as="n" hint-placeholder-count="2">
+          <div style="display: flex; gap: 14px; padding-bottom: 14px; border-bottom: 1px solid #E1E6E2">
+            <div style="font-size: 14px; color: #4A5560; width: 90px; flex-shrink: 0">{{n.data}}</div>
+            <div style="font-size: 15px; line-height: 1.5">{{n.texto}}</div>
+          </div>
+        </template>
+        <template data-k="if" value="{{semNotas}}" hint-placeholder-val="{{ false }}">
+          <div style="font-size: 15px; color: #4A5560">Nenhuma observação registrada ainda. Use “Adicionar observação”.</div>
+        </template>
+      </div>
     </section>
 
     <p style="margin: 0; font-size: 13px; color: #4A5560">Dados fictícios para demonstração do protótipo.</p>
