@@ -21,10 +21,11 @@ body{background:#DDE3DF}
   #dc-root{padding:24px 0}
   #dc-root>*{min-height:calc(100vh - 48px) !important;border-radius:24px;box-shadow:0 8px 30px rgba(0,0,0,.18);overflow:hidden}
 }
-@media (max-width: 819px){#dc-root{padding-bottom:64px}}
+
 .tc-home{position:fixed;right:16px;bottom:16px;z-index:50;font:600 14px/1 system-ui,sans-serif;background:#183236;color:#fff;text-decoration:none;padding:10px 14px;border-radius:999px;opacity:.85}
 .tc-home:hover{opacity:1;color:#fff}
 </style>
+<script src="../assets/store.js"></script>
 <script src="../assets/dc-lite.js"></script>
 </head>
 <body>
@@ -39,8 +40,8 @@ body{background:#DDE3DF}
   </div>
 
   <div style="display: flex; flex-direction: column; align-items: center; gap: 14px">
-    <div style="width: clamp(67px, 15.62vw, 120px); height: clamp(67px, 15.62vw, 120px); border-radius: 50%; background: #E3F0F1; display: flex; align-items: center; justify-content: center; font-size: clamp(33px, 6.51vw, 50px); font-weight: 700; color: #0B5D66">M</div>
-    <h1 style="margin: 0; font-size: clamp(26px, 5.21vw, 40px)">Olá, Maria!</h1>
+    <div style="width: clamp(67px, 15.62vw, 120px); height: clamp(67px, 15.62vw, 120px); border-radius: 50%; background: #E3F0F1; display: flex; align-items: center; justify-content: center; font-size: clamp(33px, 6.51vw, 50px); font-weight: 700; color: #0B5D66">{{inicial}}</div>
+    <h1 style="margin: 0; font-size: clamp(26px, 5.21vw, 40px)">Olá, {{primeiro}}!</h1>
     <p style="margin: 0; font-size: clamp(18px, 3.65vw, 28px); color: #2B333A">Digite seus 4 números secretos.</p>
   </div>
 
@@ -85,12 +86,16 @@ class Component extends DCLogic {
     if (this.state.pin.length < 4) this.setState({ pin: this.state.pin + d });
   }
   renderVals() {
+    const idoso = (window.TC ? TC.current() : null) || { nome: 'Maria Aparecida Souza' };
+    const primeiro = (idoso.nome || 'Idoso').trim().split(/\s+/)[0];
+    const inicial = (primeiro.charAt(0) || 'I').toUpperCase();
     const n = this.state.pin.length;
     const dots = [0, 1, 2, 3].map((i) => ({
       style: 'width: 40px; height: 40px; border-radius: 20px; box-sizing: border-box; border: 4px solid #0B5D66; background: ' + (i < n ? '#0B5D66' : '#FFFFFF')
     }));
     const keys = ['1','2','3','4','5','6','7','8','9'].map((d) => ({ label: d, press: () => this.add(d) }));
     return {
+      primeiro, inicial,
       dots,
       keys,
       zero: () => this.add('0'),

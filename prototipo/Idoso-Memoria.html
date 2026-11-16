@@ -20,7 +20,7 @@ body{background:#DDE3DF}
   #dc-root{padding:24px 0}
   #dc-root>*{min-height:calc(100vh - 48px) !important;border-radius:24px;box-shadow:0 8px 30px rgba(0,0,0,.18);overflow:hidden}
 }
-@media (max-width: 819px){#dc-root{padding-bottom:64px}}
+
 .tc-home{position:fixed;right:16px;bottom:16px;z-index:50;font:600 14px/1 system-ui,sans-serif;background:#183236;color:#fff;text-decoration:none;padding:10px 14px;border-radius:999px;opacity:.85}
 .tc-home:hover{opacity:1;color:#fff}
 </style>
@@ -64,7 +64,7 @@ body{background:#DDE3DF}
           <svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#7A5B00" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-9.3-8.7A5.2 5.2 0 0 1 12 6.1a5.2 5.2 0 0 1 9.3 5.2C19 15.6 12 20 12 20z"/></svg>
         </template>
         <template data-k="if" value="{{c.shown}}" hint-placeholder-val="{{ false }}">
-          <span style="font-size: clamp(18px, 3.12vw, 24px); font-weight: 700; color: #5C4400">{{c.word}}</span>
+          <span style="font-size: clamp(10px, 2.9vw, 20px); font-weight: 700; color: #5C4400; max-width: 100%; box-sizing: border-box; padding: 0 2px; text-align: center; line-height: 1.05; white-space: nowrap">{{c.word}}</span>
         </template>
       </button>
     </template>

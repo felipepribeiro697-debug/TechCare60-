@@ -19,10 +19,11 @@ body{background:#DDE3DF}
   #dc-root{padding:24px 0}
   #dc-root>*{min-height:calc(100vh - 48px) !important;border-radius:24px;box-shadow:0 8px 30px rgba(0,0,0,.18);overflow:hidden}
 }
-@media (max-width: 819px){#dc-root{padding-bottom:64px}}
+
 .tc-home{position:fixed;right:16px;bottom:16px;z-index:50;font:600 14px/1 system-ui,sans-serif;background:#183236;color:#fff;text-decoration:none;padding:10px 14px;border-radius:999px;opacity:.85}
 .tc-home:hover{opacity:1;color:#fff}
 </style>
+<script src="../assets/store.js"></script>
 <script src="../assets/dc-lite.js"></script>
 </head>
 <body>
@@ -30,9 +31,9 @@ body{background:#DDE3DF}
 <div style="width: 100%; max-width: 768px; min-height: 100vh; margin: 0 auto; box-sizing: border-box; padding: clamp(16px, 5.73vw, 44px) clamp(16px, 7.29vw, 56px); display: flex; flex-direction: column; gap: 28px; background: #F4F6F3; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; color: #1B1F23; zoom: {{zoom}}">
   <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
     <div style="display: flex; align-items: center; gap: 16px; flex: 1 1 auto; min-width: 0">
-      <div style="width: 72px; height: 72px; flex-shrink: 0; border-radius: 36px; background: #E3F0F1; display: flex; align-items: center; justify-content: center; font-size: clamp(21px, 4.17vw, 32px); font-weight: 700; color: #0B5D66">M</div>
+      <div style="width: 72px; height: 72px; flex-shrink: 0; border-radius: 36px; background: #E3F0F1; display: flex; align-items: center; justify-content: center; font-size: clamp(21px, 4.17vw, 32px); font-weight: 700; color: #0B5D66">{{inicial}}</div>
       <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
-        <div style="font-size: clamp(24px, 4.69vw, 36px); font-weight: 700">Bom dia, Maria!</div>
+        <div style="font-size: clamp(24px, 4.69vw, 36px); font-weight: 700">Bom dia, {{primeiro}}!</div>
         <div style="font-size: clamp(16px, 3.2vw, 22px); color: #4A5560">Terça-feira, 20 de outubro</div>
       </div>
     </div>
@@ -134,8 +135,13 @@ class Component extends DCLogic {
   renderVals() {
     const self = this;
     const zoom = this.levels[this.state.fz] || 1;
+    const idoso = (window.TC ? TC.current() : null) || { nome: 'Maria Aparecida Souza' };
+    const primeiro = (idoso.nome || 'Idoso').trim().split(/\s+/)[0];
+    const inicial = (primeiro.charAt(0) || 'I').toUpperCase();
     return {
       zoom: zoom,
+      primeiro: primeiro,
+      inicial: inicial,
       aumentar: function () { self.setState({ fz: (self.state.fz + 1) % self.levels.length }); },
       ouvir: function () { self.ouvir(); }
     };
