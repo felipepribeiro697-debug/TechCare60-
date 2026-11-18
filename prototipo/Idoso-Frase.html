@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>TechCare 60+ – Complete a frase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+h1{overflow-wrap:anywhere}
+body{margin:0}
+a{color:#0B5D66}a:hover{color:#08434A}
+.opt{font-family:inherit;cursor:pointer}
+.opt:active{background:#F1EDFA}
+</style>
+<style>
+body{background:#DDE3DF}
+#dc-root>*{background-color:#F4F6F3}
+@media (min-width: 820px){
+  #dc-root{padding:24px 0}
+  #dc-root>*{min-height:calc(100vh - 48px) !important;border-radius:24px;box-shadow:0 8px 30px rgba(0,0,0,.18);overflow:hidden}
+}
+</style>
+<script src="../assets/store.js"></script>
+<script src="../assets/dc-lite.js"></script>
+</head>
+<body>
+<template id="dc-tpl">
+<div style="width: 100%; max-width: 768px; min-height: 100vh; margin: 0 auto; box-sizing: border-box; padding: clamp(16px, 5.73vw, 44px) clamp(16px, 7.29vw, 56px); display: flex; flex-direction: column; gap: 30px; background: #F4F6F3; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; color: #1B1F23">
+  <div style="display: flex; justify-content: space-between; align-items: center">
+    <a href="Idoso-Hoje.html" style="display: flex; align-items: center; gap: 10px; font-size: clamp(18px, 3.12vw, 24px); font-weight: 700; text-decoration: none; padding: 12px 20px 12px 8px; border-radius: 16px; background: #FFFFFF; border: 2px solid #C9D1CC; color: #1B1F23">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1B1F23" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+      Voltar
+    </a>
+    <div style="font-size: 20px; font-weight: 700; color: #5B3F9E; background: #ECE6F7; padding: 10px 18px; border-radius: 14px; letter-spacing: 0.5px">LINGUAGEM</div>
+  </div>
+
+  <h1 style="margin: 0; font-size: clamp(34px, 6.77vw, 52px); line-height: 1.1">Complete a frase</h1>
+
+  <template data-k="if" value="{{jogando}}" hint-placeholder-val="{{ true }}">
+    <div style="display: flex; flex-direction: column; gap: 28px">
+      <div style="background: #FFFFFF; border: 2px solid #C9D1CC; border-radius: 28px; padding: clamp(22px, 5vw, 40px); display: flex; flex-direction: column; gap: 22px; align-items: center">
+        <button onClick="{{ouvir}}" aria-label="Ouvir a frase" style="font-family: inherit; display: flex; align-items: center; gap: 10px; height: 56px; padding: 0 20px; border-radius: 16px; border: 2px solid #C9D1CC; background: #FFFFFF; font-size: clamp(16px, 3.12vw, 22px); font-weight: 700; color: #1B1F23; cursor: pointer">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1B1F23" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+          Ouvir a frase
+        </button>
+        <div style="font-size: clamp(26px, 5.5vw, 42px); font-weight: 700; line-height: 1.35; text-align: center">{{antes}} <span style="display: inline-block; min-width: 96px; border-bottom: 4px solid #5B3F9E; vertical-align: middle">&nbsp;</span>{{depois}}</div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 16px">
+        <template data-k="for" list="{{opcoes}}" as="o" hint-placeholder-count="3">
+          <button class="opt" onClick="{{o.pick}}" style="{{o.style}}">{{o.label}}</button>
+        </template>
+      </div>
+
+      <template data-k="if" value="{{erro}}" hint-placeholder-val="{{ false }}">
+        <div style="background: #FFF4D6; border: 2px solid #E2C46A; border-radius: 20px; padding: 18px 22px; font-size: clamp(18px, 3.65vw, 26px); color: #4A3800; text-align: center">Quase! Tente outra vez. Você consegue.</div>
+      </template>
+    </div>
+  </template>
+
+  <template data-k="if" value="{{feito}}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center">
+      <div style="width: clamp(110px, 26vw, 180px); height: clamp(110px, 26vw, 180px); border-radius: 50%; background: #E4EEE6; display: flex; align-items: center; justify-content: center">
+        <div style="width: clamp(78px, 18vw, 130px); height: clamp(78px, 18vw, 130px); border-radius: 50%; background: #1E6B3A; display: flex; align-items: center; justify-content: center">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <h2 style="margin: 0; font-size: clamp(30px, 6vw, 46px)">Muito bem!</h2>
+        <p style="margin: 0; font-size: clamp(20px, 4vw, 30px); color: #2B333A">Você completou a frase certinho.</p>
+      </div>
+      <a href="Idoso-Hoje.html" style="display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; max-width: 480px; height: 100px; border-radius: 24px; background: #0B5D66; color: #FFFFFF; font-size: clamp(22px, 4.69vw, 34px); font-weight: 700; text-decoration: none">
+        Voltar para as atividades
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </template>
+
+  <div style="margin-top: auto; font-size: 20px; color: #4A5560; text-align: center">Toque na palavra que completa a frase.</div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" id="dc-logic" data-props='{"$preview":{"width":768,"height":1024}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { feito: false, erro: false };
+    this.frase = { antes: 'Depois da noite vem o', depois: '.', correta: 'dia', opcoes: ['dia', 'chuva', 'livro'] };
+  }
+  componentWillUnmount() { try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { } }
+  ouvir() {
+    try {
+      const synth = window.speechSynthesis;
+      if (!synth) return;
+      if (synth.speaking) { synth.cancel(); return; }
+      const u = new SpeechSynthesisUtterance(this.frase.antes + '... ' + this.frase.depois);
+      u.lang = 'pt-BR';
+      u.rate = 0.9;
+      synth.cancel();
+      synth.speak(u);
+    } catch (e) { }
+  }
+  escolher(op) {
+    if (op === this.frase.correta) {
+      if (window.TC) TC.marcarFeita('linguagem');
+      this.setState({ feito: true, erro: false });
+    } else {
+      this.setState({ erro: true });
+    }
+  }
+  renderVals() {
+    const self = this;
+    const f = this.frase;
+    const base = 'height: 84px; border-radius: 22px; border: 3px solid #5B3F9E; background: #FFFFFF; color: #3A2A66; font-size: clamp(22px, 4.43vw, 34px); font-weight: 700';
+    const opcoes = f.opcoes.map(function (label) {
+      return { label: label, style: base, pick: function () { self.escolher(label); } };
+    });
+    return {
+      jogando: !this.state.feito,
+      feito: this.state.feito,
+      erro: this.state.erro,
+      antes: f.antes,
+      depois: f.depois,
+      opcoes: opcoes,
+      ouvir: function () { self.ouvir(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

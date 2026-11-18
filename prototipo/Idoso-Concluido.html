@@ -50,17 +50,17 @@ body{background:#DDE3DF}
 
   <div style="align-self: stretch; background: #FFFFFF; border: 2px solid #C9D1CC; border-radius: 28px; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px; text-align: left">
     <div style="display: flex; flex-direction: column; gap: 4px">
-      <div style="font-size: 20px; font-weight: 700; color: #4A5560">FALTA 1 ATIVIDADE HOJE</div>
-      <div style="font-size: clamp(18px, 3.65vw, 28px); font-weight: 700">Complete a frase</div>
+      <div style="font-size: 20px; font-weight: 700; color: #4A5560">{{faltaLabel}}</div>
+      <div style="font-size: clamp(18px, 3.65vw, 28px); font-weight: 700">{{proxNome}}</div>
     </div>
     <div style="height: 18px; width: min(220px, 100%); border-radius: 9px; background: #E1E6E2; overflow: hidden">
-      <div style="width: 66%; height: 18px; border-radius: 9px; background: #1E6B3A"></div>
+      <div style="width: {{pct}}%; height: 18px; border-radius: 9px; background: #1E6B3A"></div>
     </div>
   </div>
 
   <div style="margin-top: auto; align-self: stretch; display: flex; flex-direction: column; gap: 18px">
-    <a href="Idoso-Instrucao.html" style="display: flex; align-items: center; justify-content: center; gap: 14px; height: 100px; border-radius: 24px; background: #0B5D66; color: #FFFFFF; font-size: clamp(22px, 4.43vw, 34px); font-weight: 700; text-decoration: none">
-      Próxima atividade
+    <a href="{{proxHref}}" style="display: flex; align-items: center; justify-content: center; gap: 14px; height: 100px; border-radius: 24px; background: #0B5D66; color: #FFFFFF; font-size: clamp(22px, 4.43vw, 34px); font-weight: 700; text-decoration: none">
+      {{proxLabel}}
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
     <a href="Idoso-Hoje.html" style="display: flex; align-items: center; justify-content: center; height: 88px; box-sizing: border-box; border-radius: 24px; border: 3px solid #0B5D66; background: #FFFFFF; color: #0B5D66; font-size: clamp(20px, 3.91vw, 30px); font-weight: 700; text-decoration: none">Voltar ao início</a>
@@ -70,10 +70,33 @@ body{background:#DDE3DF}
 <div id="dc-root"></div>
 <script type="text/x-dc" id="dc-logic" data-props='{"$preview":{"width":768,"height":1024}}'>
 class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    if (window.TC) TC.marcarFeita('memoria');
+  }
   renderVals() {
     const idoso = (window.TC ? TC.current() : null) || { nome: 'Maria Aparecida Souza' };
     const primeiro = (idoso.nome || 'Idoso').trim().split(/\s+/)[0];
-    return { primeiro };
+    const defs = [
+      { id: 'memoria', titulo: 'Jogo da memória', href: 'Idoso-Instrucao.html' },
+      { id: 'atencao', titulo: 'Encontre o diferente', href: '' },
+      { id: 'linguagem', titulo: 'Complete a frase', href: 'Idoso-Frase.html' }
+    ];
+    const feitasHoje = window.TC ? TC.feitasHoje() : ['atencao', 'memoria'];
+    const feitas = defs.filter(function (d) { return feitasHoje.indexOf(d.id) >= 0; }).length;
+    const falta = 3 - feitas;
+    let prox = null;
+    for (let i = 0; i < defs.length; i++) {
+      if (feitasHoje.indexOf(defs[i].id) < 0 && defs[i].href) { prox = defs[i]; break; }
+    }
+    return {
+      primeiro: primeiro,
+      faltaLabel: falta <= 0 ? 'TUDO FEITO HOJE' : ('FALTA ' + falta + (falta === 1 ? ' ATIVIDADE HOJE' : ' ATIVIDADES HOJE')),
+      proxNome: prox ? prox.titulo : 'Você fez tudo por hoje. Parabéns!',
+      pct: Math.round(feitas / 3 * 100),
+      proxHref: prox ? prox.href : 'Idoso-Hoje.html',
+      proxLabel: prox ? 'Próxima atividade' : 'Ver minhas atividades'
+    };
   }
 }
 </script>

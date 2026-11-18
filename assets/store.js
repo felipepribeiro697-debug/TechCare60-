@@ -138,6 +138,21 @@
       return i;
     },
 
+    // --- atividades concluídas hoje (app do idoso) ---
+    feitasHoje: function () {
+      var i = this.current();
+      return (i && i.feitasHoje) ? i.feitasHoje.slice() : ['atencao'];
+    },
+    marcarFeita: function (atividadeId) {
+      var d = db(); var i = find(d, d.currentId) || d.idosos[0];
+      if (i) {
+        if (!i.feitasHoje) i.feitasHoje = ['atencao'];
+        if (i.feitasHoje.indexOf(atividadeId) < 0) i.feitasHoje.push(atividadeId);
+        write(d);
+      }
+      return i ? i.feitasHoje : [];
+    },
+
     reset: function () { try { localStorage.removeItem(KEY); } catch (e) { } }
   };
 
