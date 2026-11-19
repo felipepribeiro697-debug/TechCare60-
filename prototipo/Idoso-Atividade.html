@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="pt-BR" data-app="idoso">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>TechCare 60+ – Atividade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+h1{overflow-wrap:anywhere}
+body{margin:0}
+a{color:#0B5D66}a:hover{color:#08434A}
+.tile{font-family:inherit;cursor:pointer}
+.tile[aria-disabled="true"]{cursor:default}
+.btn{font-family:inherit;cursor:pointer}
+</style>
+<style>
+body{background:#DDE3DF}
+#dc-root>*{background-color:#F4F6F3}
+@media (min-width: 820px){
+  #dc-root{padding:24px 0}
+  #dc-root>*{min-height:calc(100vh - 48px) !important;border-radius:24px;box-shadow:0 8px 30px rgba(0,0,0,.18);overflow:hidden}
+}
+</style>
+<script src="../assets/tema.js"></script>
+<script src="../assets/store.js"></script>
+<script src="../assets/dc-lite.js"></script>
+</head>
+<body>
+<template id="dc-tpl">
+<div style="width: 100%; max-width: 768px; min-height: 100vh; margin: 0 auto; box-sizing: border-box; padding: clamp(16px, 5.73vw, 44px) clamp(16px, 7.29vw, 56px); display: flex; flex-direction: column; gap: 26px; background: #F4F6F3; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; color: #1B1F23">
+  <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+    <a href="Idoso-Hoje.html" style="display: flex; align-items: center; gap: 10px; font-size: clamp(18px, 3.12vw, 24px); font-weight: 700; text-decoration: none; padding: 12px 20px 12px 8px; border-radius: 16px; background: #FFFFFF; border: 2px solid #C9D1CC; color: #1B1F23">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1B1F23" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+      Voltar
+    </a>
+    <div style="{{chipStyle}}">{{chip}}</div>
+  </div>
+
+  <h1 style="margin: 0; font-size: clamp(34px, 6.77vw, 52px); line-height: 1.1">{{titulo}}</h1>
+
+  <template data-k="if" value="{{naoEncontrada}}" hint-placeholder-val="{{ false }}">
+    <div style="background: #FFFFFF; border: 2px dashed #C9D1CC; border-radius: 28px; padding: 32px 24px; text-align: center; font-size: clamp(18px, 3.4vw, 24px); color: #4A5560">Esta atividade não está disponível. Toque em Voltar para ver as suas atividades.</div>
+  </template>
+
+  <template data-k="if" value="{{intro}}" hint-placeholder-val="{{ true }}">
+    <div style="display: flex; flex-direction: column; gap: 22px">
+      <template data-k="for" list="{{passos}}" as="p" hint-placeholder-count="3">
+        <div style="display: flex; gap: 20px; align-items: flex-start">
+          <div style="width: 52px; height: 52px; flex-shrink: 0; border-radius: 26px; background: #0B5D66; color: #FFFFFF; font-size: clamp(18px, 3.65vw, 28px); font-weight: 700; display: flex; align-items: center; justify-content: center">{{p.n}}</div>
+          <p style="margin: 6px 0 0; font-size: clamp(20px, 3.91vw, 30px); line-height: 1.35">{{p.texto}}</p>
+        </div>
+      </template>
+    </div>
+    <div style="margin-top: auto; display: flex; flex-direction: column; gap: 18px">
+      <button class="btn tc-ouvir" onClick="{{ouvir}}" style="display: flex; align-items: center; justify-content: center; gap: 14px; height: 88px; border-radius: 24px; border: 3px solid #0B5D66; background: #FFFFFF; font-size: clamp(20px, 3.91vw, 30px); font-weight: 700; color: #0B5D66">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0B5D66" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+        Ouvir a explicação
+      </button>
+      <button class="btn" onClick="{{comecar}}" style="display: flex; align-items: center; justify-content: center; gap: 14px; height: 100px; border-radius: 24px; border: none; background: #0B5D66; color: #FFFFFF; font-size: clamp(24px, 4.69vw, 36px); font-weight: 700">
+        Começar
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="#FFFFFF" stroke="none" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
+      </button>
+    </div>
+  </template>
+
+  <template data-k="if" value="{{jogo}}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; gap: 22px">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+        <div aria-live="polite" style="font-size: clamp(18px, 3.65vw, 26px); font-weight: 700; color: #2B333A">{{progresso}}</div>
+        <button class="btn tc-ouvir" onClick="{{ouvir}}" aria-label="Ouvir esta tela" style="display: flex; align-items: center; gap: 10px; height: 56px; padding: 0 18px; border-radius: 16px; border: 2px solid #C9D1CC; background: #FFFFFF; font-size: clamp(16px, 3.12vw, 22px); font-weight: 700; color: #1B1F23">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1B1F23" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+          Ouvir
+        </button>
+      </div>
+
+      <div style="font-size: clamp(21px, 4.17vw, 32px); font-weight: 700; line-height: 1.3">{{instrucao}}</div>
+
+      <template data-k="if" value="{{mostrar}}" hint-placeholder-val="{{ false }}">
+        <div style="background: #FFFFFF; border: 2px solid #C9D1CC; border-radius: 28px; padding: clamp(16px, 4vw, 28px)">
+          <div style="{{mostrarGrid}}">
+            <template data-k="for" list="{{itensMostrar}}" as="t" hint-placeholder-count="3">
+              <div style="{{t.style}}">
+                <template data-k="if" value="{{t.img}}" hint-placeholder-val="{{ false }}"><img src="{{t.img}}" alt="" style="{{t.imgStyle}}"></template>
+                <template data-k="if" value="{{t.label}}" hint-placeholder-val="{{ true }}"><span style="{{t.labelStyle}}">{{t.label}}</span></template>
+              </div>
+            </template>
+          </div>
+        </div>
+        <button class="btn" onClick="{{jaGuardei}}" style="display: flex; align-items: center; justify-content: center; gap: 12px; height: 96px; border-radius: 24px; border: none; background: #0B5D66; color: #FFFFFF; font-size: clamp(22px, 4.43vw, 34px); font-weight: 700">
+          Já guardei
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+        </button>
+      </template>
+
+      <template data-k="if" value="{{temSlots}}" hint-placeholder-val="{{ false }}">
+        <div aria-label="Sua resposta" style="{{slotsGrid}}">
+          <template data-k="for" list="{{slots}}" as="t" hint-placeholder-count="3">
+            <div style="{{t.style}}">
+              <template data-k="if" value="{{t.img}}" hint-placeholder-val="{{ false }}"><img src="{{t.img}}" alt="" style="{{t.imgStyle}}"></template>
+              <template data-k="if" value="{{t.label}}" hint-placeholder-val="{{ true }}"><span style="{{t.labelStyle}}">{{t.label}}</span></template>
+            </div>
+          </template>
+        </div>
+      </template>
+
+      <template data-k="if" value="{{temPrompt}}" hint-placeholder-val="{{ false }}">
+        <div style="background: #FFFFFF; border: 2px solid #C9D1CC; border-radius: 28px; padding: clamp(20px, 4.5vw, 36px); display: flex; align-items: center; justify-content: center; min-height: 150px">
+          <template data-k="if" value="{{promptImg}}" hint-placeholder-val="{{ false }}"><img src="{{promptImg}}" alt="{{promptAlt}}" style="width: clamp(110px, 26vw, 180px); height: clamp(110px, 26vw, 180px)"></template>
+          <template data-k="if" value="{{promptPalavra}}" hint-placeholder-val="{{ false }}"><div style="font-size: clamp(44px, 10vw, 76px); font-weight: 700; letter-spacing: 2px; color: #3A2A66">{{promptPalavra}}</div></template>
+        </div>
+      </template>
+
+      <template data-k="if" value="{{temOpcoes}}" hint-placeholder-val="{{ true }}">
+        <div style="{{opcoesGrid}}">
+          <template data-k="for" list="{{opcoes}}" as="t" hint-placeholder-count="4">
+            <button class="tile" onClick="{{t.pick}}" aria-label="{{t.aria}}" aria-disabled="{{t.off}}" style="{{t.style}}">
+              <template data-k="if" value="{{t.img}}" hint-placeholder-val="{{ false }}"><img src="{{t.img}}" alt="" style="{{t.imgStyle}}"></template>
+              <template data-k="if" value="{{t.label}}" hint-placeholder-val="{{ true }}"><span style="{{t.labelStyle}}">{{t.label}}</span></template>
+            </button>
+          </template>
+        </div>
+      </template>
+
+      <template data-k="if" value="{{msg}}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="{{msgStyle}}">{{msg}}</div>
+      </template>
+
+      <template data-k="if" value="{{podeRever}}" hint-placeholder-val="{{ false }}">
+        <button class="btn" onClick="{{rever}}" style="align-self: center; display: flex; align-items: center; gap: 10px; height: 64px; padding: 0 24px; border-radius: 18px; border: 2px solid #0B5D66; background: #FFFFFF; color: #0B5D66; font-size: clamp(18px, 3.4vw, 24px); font-weight: 700">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B5D66" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+          {{reverLabel}}
+        </button>
+      </template>
+
+      <template data-k="if" value="{{certo}}" hint-placeholder-val="{{ false }}">
+        <div style="background: #E4EEE6; border: 3px solid #1E6B3A; border-radius: 28px; padding: clamp(20px, 4vw, 28px); display: flex; flex-direction: column; align-items: center; gap: 18px">
+          <div style="display: flex; align-items: center; gap: 16px">
+            <div style="width: 64px; height: 64px; flex-shrink: 0; border-radius: 50%; background: #1E6B3A; display: flex; align-items: center; justify-content: center">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <div role="status" style="display: flex; flex-direction: column; gap: 4px">
+              <div style="font-size: clamp(22px, 4.43vw, 34px); font-weight: 700; color: #14532B">Muito bem!</div>
+              <div style="font-size: clamp(18px, 3.12vw, 24px); color: #1B1F23">{{certoTexto}}</div>
+            </div>
+          </div>
+          <button class="btn" onClick="{{proximo}}" style="display: flex; align-items: center; gap: 10px; height: 68px; padding: 0 22px; border-radius: 22px; border: none; background: #1E6B3A; color: #FFFFFF; font-size: clamp(20px, 3.91vw, 30px); font-weight: 700">
+            {{proximoLabel}}
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </template>
+    </div>
+    <div style="margin-top: auto; font-size: 20px; color: #4A5560; text-align: center">Não tem tempo: vá com calma. Se errar, é só tentar de novo.</div>
+  </template>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" id="dc-logic" data-props='{"$preview":{"width":768,"height":1024}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    let id = '';
+    try { id = new URLSearchParams(location.search).get('a') || ''; } catch (e) { }
+    this.id = id;
+    this.ativ = window.TC ? TC.atividade(id) : null;
+
+    this.ICONES = {
+      sol: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+      casa: '<path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/>',
+      flor: '<circle cx="12" cy="8" r="2"/><path d="M12 6a2.5 2.5 0 1 1 2 -3.5M14 8a2.5 2.5 0 1 1 1.5 3.5M12 10a2.5 2.5 0 1 1 -2 3.5M10 8a2.5 2.5 0 1 1 -1.5 -3.5"/><path d="M12 10v11M12 17c-2 0-4-1.5-4-3.5M12 15c2 0 4-1.5 4-3"/>',
+      coracao: '<path d="M12 20s-7-4.4-9.3-8.7A5.2 5.2 0 0 1 12 6.1a5.2 5.2 0 0 1 9.3 5.2C19 15.6 12 20 12 20z"/>',
+      estrela: '<path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/>',
+      lua: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
+      guarda: '<path d="M22 12a10 10 0 0 0-20 0z"/><path d="M12 12v7a2.5 2.5 0 0 1-5 0"/><path d="M12 2v1"/>',
+      relogio: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+      livro: '<path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/>',
+      xicara: '<path d="M17 9h1a3.5 3.5 0 0 1 0 7h-1"/><path d="M3 9h14v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/><path d="M7 2.5v3M10.5 2.5v3M14 2.5v3"/>',
+      sino: '<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>'
+    };
+    this.NOMES = { sol: 'SOL', casa: 'CASA', flor: 'FLOR', coracao: 'CORAÇÃO', estrela: 'ESTRELA', lua: 'LUA', guarda: 'GUARDA-CHUVA', relogio: 'RELÓGIO', livro: 'LIVRO', xicara: 'XÍCARA', sino: 'SINO' };
+    this.CORES = { VERDE: '#1E8C45', AZUL: '#1F5FBF', AMARELO: '#F2C230', VERMELHO: '#C8322B' };
+
+    // Atividades do catálogo (sugestões a validar com a fonoaudióloga).
+    const CFG = {
+      m2: { tipo: 'sequencia', modo: 'figura', parte: 'Sequência',
+        passos: ['Olhe as figuras e guarde a ordem.', 'Quando estiver pronto, toque em “Já guardei”.', 'Depois, toque nas figuras na mesma ordem.'],
+        rodadas: [['sol', 'casa', 'flor'], ['lua', 'coracao', 'estrela', 'casa']], extras: [['lua', 'estrela'], ['sol', 'flor']] },
+      a2: { tipo: 'sequencia', modo: 'cor', parte: 'Sequência',
+        passos: ['Olhe as cores e guarde a ordem.', 'Quando estiver pronto, toque em “Já guardei”.', 'Depois, toque nas cores na mesma ordem.'],
+        rodadas: [['VERDE', 'AZUL', 'AMARELO'], ['VERMELHO', 'AMARELO', 'VERDE', 'AZUL']], extras: [['VERMELHO'], []] },
+      m3: { tipo: 'lista', parte: '',
+        passos: ['Leia a lista de compras com calma.', 'Quando estiver pronto, toque em “Já guardei”.', 'Depois, toque nos itens que estavam na lista.'],
+        lista: ['ARROZ', 'LEITE', 'PÃO', 'BANANA'], distratores: ['SABÃO', 'CAFÉ', 'OVOS', 'AÇÚCAR'] },
+      a1: { tipo: 'diferente', parte: 'Rodada',
+        passos: ['Olhe as figuras com atenção.', 'Uma delas é diferente das outras.', 'Toque na figura diferente.'],
+        rodadas: [{ base: 'coracao', dif: 'casa' }, { base: 'sol', dif: 'flor' }, { base: 'estrela', dif: 'lua' }] },
+      l2: { tipo: 'figura-palavra', parte: 'Figura',
+        passos: ['Olhe a figura.', 'Fale o nome dela em voz alta.', 'Depois, toque na palavra certa.'],
+        rodadas: [{ fig: 'xicara', opcoes: ['XÍCARA', 'CADEIRA', 'SAPATO'] }, { fig: 'guarda', opcoes: ['GUARDA-CHUVA', 'PANELA', 'JANELA'] }, { fig: 'relogio', opcoes: ['RELÓGIO', 'TELEFONE', 'ÓCULOS'] }, { fig: 'livro', opcoes: ['LIVRO', 'MESA', 'CAMISA'] }] },
+      l3: { tipo: 'palavra-figura', parte: 'Palavra',
+        passos: ['Leia a palavra em voz alta.', 'Procure a figura que combina com ela.', 'Toque na figura certa.'],
+        rodadas: [{ palavra: 'LUA', opcoes: ['lua', 'sol', 'casa'] }, { palavra: 'FLOR', opcoes: ['flor', 'sino', 'livro'] }, { palavra: 'SINO', opcoes: ['sino', 'xicara', 'coracao'] }, { palavra: 'CASA', opcoes: ['casa', 'estrela', 'relogio'] }] }
+    };
+    const emb = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
+    const c = this.cfg = (this.ativ && CFG[id]) || null;
+    if (c) {
+      if (c.tipo === 'sequencia') this.rodadas = c.rodadas.map((itens, r) => ({ itens: itens, opcoes: emb(itens.concat(c.extras[r] || [])) }));
+      else if (c.tipo === 'lista') this.rodadas = [{ itens: c.lista, opcoes: emb(c.lista.concat(c.distratores)) }];
+      else if (c.tipo === 'diferente') this.rodadas = c.rodadas.map((rd) => {
+        const pos = Math.floor(Math.random() * 9);
+        const opcoes = [];
+        for (let i = 0; i < 9; i++) opcoes.push(i === pos ? rd.dif : rd.base);
+        return { certa: pos, opcoes: opcoes };
+      });
+      else this.rodadas = c.rodadas.map((rd) => Object.assign({}, rd, { certa: rd.opcoes[0], opcoes: emb(rd.opcoes) }));
+    }
+    this.state = { fase: 'intro', r: 0, resp: [], erradas: [], msg: '', tom: '' };
+  }
+  componentWillUnmount() { try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { } }
+  memoriza() { return this.cfg.tipo === 'sequencia' || this.cfg.tipo === 'lista'; }
+  comecar() { this.setState({ fase: this.memoriza() ? 'mostrar' : 'responder', r: 0, resp: [], erradas: [], msg: '' }); }
+  escolher(k) {
+    const { fase, r, resp, erradas } = this.state;
+    if (fase !== 'responder') return;
+    const t = this.cfg.tipo, rd = this.rodadas[r];
+    if (t === 'sequencia') {
+      if (resp.indexOf(k) >= 0) return;
+      if (k !== rd.itens[resp.length]) { this.setState({ msg: 'Quase! Essa não é a próxima. Tente outra.', tom: 'erro' }); return; }
+      const nr = resp.concat([k]);
+      if (nr.length === rd.itens.length) this.setState({ resp: nr, fase: 'certo', msg: '' });
+      else this.setState({ resp: nr, msg: 'Isso! Agora a próxima.', tom: 'ok' });
+    } else if (t === 'lista') {
+      if (resp.indexOf(k) >= 0 || erradas.indexOf(k) >= 0) return;
+      if (rd.itens.indexOf(k) < 0) { this.setState({ erradas: erradas.concat([k]), msg: 'Esse não estava na lista. Continue!', tom: 'erro' }); return; }
+      const nr = resp.concat([k]);
+      if (nr.length === rd.itens.length) this.setState({ resp: nr, fase: 'certo', msg: '' });
+      else this.setState({ resp: nr, msg: 'Isso! Estava na lista.', tom: 'ok' });
+    } else {
+      if (erradas.indexOf(k) >= 0) return;
+      if (k === rd.certa) this.setState({ resp: [k], fase: 'certo', msg: '' });
+      else this.setState({ erradas: erradas.concat([k]), msg: t === 'diferente' ? 'Essa é igual às outras. Olhe com calma.' : 'Quase! Tente outra vez.', tom: 'erro' });
+    }
+  }
+  proximo() {
+    try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { }
+    if (this.state.r + 1 >= this.rodadas.length) { location.href = 'Idoso-Concluido.html?a=' + this.id; return; }
+    this.setState({ r: this.state.r + 1, fase: this.memoriza() ? 'mostrar' : 'responder', resp: [], erradas: [], msg: '' });
+  }
+  ouvir() {
+    try {
+      const synth = window.speechSynthesis;
+      if (!synth) return;
+      if (synth.speaking) { synth.cancel(); return; }
+      const root = document.getElementById('dc-root');
+      let txt = root ? (root.innerText || root.textContent || '') : '';
+      txt = txt.replace(/Ouvir a explicação/gi, ' ').replace(/\bOuvir\b/gi, ' ').replace(/Voltar/gi, ' ').replace(/Começar/gi, ' ').replace(/\s+/g, ' ').trim();
+      if (!txt) return;
+      const u = new SpeechSynthesisUtterance(txt);
+      u.lang = 'pt-BR';
+      u.rate = 0.95;
+      synth.cancel();
+      synth.speak(u);
+    } catch (e) { }
+  }
+  img(nome) {
+    const cor = (window.TCTema && TCTema.escuro()) ? '#E7C35C' : '#7A5B00';
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="' + cor + '" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + this.ICONES[nome] + '</svg>';
+    return 'data:image/svg+xml,' + encodeURIComponent(svg);
+  }
+  /* Monta um quadradinho (figura, cor ou palavra) no estado pedido. */
+  tile(valor, estado, prefixo) {
+    const c = this.cfg;
+    const modo = c.tipo === 'sequencia' ? c.modo : (c.tipo === 'diferente' || c.tipo === 'palavra-figura' ? 'icone' : 'palavra');
+    const base = 'box-sizing: border-box; border-radius: 22px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 12px 8px; font-family: inherit; font-weight: 700; text-align: center; min-width: 0; overflow-wrap: anywhere; ';
+    let style, label = '', img = '', aria = '';
+    const pfx = prefixo ? prefixo + '. ' : '';
+    if (modo === 'cor') {
+      const bg = this.CORES[valor];
+      const txt = valor === 'AMARELO' ? '#111111' : '#FEFEFE';
+      label = pfx + valor; aria = valor;
+      style = base + 'min-height: 110px; background: ' + bg + '; color: ' + txt + '; border: ' + (estado === 'ok' ? '5px solid #1E6B3A; opacity: .45' : '3px solid rgba(0,0,0,.18)');
+    } else {
+      if (modo === 'figura' || modo === 'icone') img = this.img(valor);
+      if (modo === 'figura') label = pfx + this.NOMES[valor];
+      if (modo === 'palavra') label = pfx + valor;
+      aria = this.NOMES[valor] || valor;
+      const cores = estado === 'ok' ? 'background: #E4EEE6; border: 4px solid #1E6B3A; color: #14532B'
+        : estado === 'off' ? 'background: #F4F6F3; border: 3px dashed #C9D1CC; color: #4A5560; opacity: .55; text-decoration: line-through'
+        : (modo === 'palavra' ? 'background: #FFFFFF; border: 3px solid #0B5D66; color: #08434A' : 'background: #FFF4D6; border: 3px solid #B88A00; color: #5C4400');
+      style = base + 'min-height: ' + (modo === 'palavra' ? '84px' : '120px') + '; ' + cores;
+    }
+    return {
+      img: img, label: label, aria: aria,
+      imgStyle: 'width: clamp(48px, 11vw, 80px); height: clamp(48px, 11vw, 80px)',
+      labelStyle: 'font-size: ' + (img ? 'clamp(14px, 2.8vw, 20px)' : 'clamp(19px, 3.6vw, 28px)') + '; line-height: 1.15',
+      style: style
+    };
+  }
+  renderVals() {
+    const self = this;
+    const a = this.ativ;
+    const cat = (a && window.TC && TC.cats[a.cat]) || { upper: 'ATIVIDADE', app: '#0B5D66', soft: '#E3F0F1' };
+    const out = {
+      titulo: a ? a.nome : 'Atividade',
+      chip: cat.upper,
+      chipStyle: 'font-size: 20px; font-weight: 700; color: ' + cat.app + '; background: ' + cat.soft + '; padding: 10px 18px; border-radius: 14px; letter-spacing: 0.5px',
+      naoEncontrada: !this.cfg,
+      intro: false, jogo: false,
+      ouvir: function () { self.ouvir(); }
+    };
+    if (!this.cfg) return out;
+    try { document.title = 'TechCare 60+ – ' + a.nome; } catch (e) { }
+    const c = this.cfg;
+    const { fase, r, resp, erradas, msg, tom } = this.state;
+    if (fase === 'intro') {
+      out.intro = true;
+      out.passos = c.passos.map((t, i) => ({ n: i + 1, texto: t }));
+      out.comecar = function () { self.comecar(); };
+      return out;
+    }
+    const rd = this.rodadas[r];
+    const total = this.rodadas.length;
+    out.jogo = true;
+    out.progresso = total > 1 ? c.parte + ' ' + (r + 1) + ' de ' + total : 'Lista de compras';
+    out.mostrar = fase === 'mostrar';
+    out.temSlots = false; out.temPrompt = false; out.temOpcoes = fase !== 'mostrar'; out.podeRever = false;
+    out.certo = fase === 'certo';
+    out.msg = msg;
+    out.msgStyle = 'border-radius: 20px; padding: 16px 22px; font-size: clamp(18px, 3.65vw, 26px); text-align: center; ' +
+      (tom === 'ok' ? 'background: #E4EEE6; border: 2px solid #9CC3A8; color: #14532B' : 'background: #FFF4D6; border: 2px solid #E2C46A; color: #4A3800');
+    out.jaGuardei = function () { self.setState({ fase: 'responder', resp: [], erradas: [], msg: '' }); };
+    out.rever = function () { self.setState({ fase: 'mostrar', resp: [], erradas: [], msg: '' }); };
+    out.proximo = function () { self.proximo(); };
+    out.proximoLabel = r + 1 >= total ? 'Terminar' : 'Continuar';
+    const colunas = (min) => 'display: grid; grid-template-columns: repeat(auto-fit, minmax(min(' + min + 'px, 100%), 1fr)); gap: 14px';
+
+    if (c.tipo === 'sequencia') {
+      const coisa = c.modo === 'cor' ? 'cores' : 'figuras';
+      out.instrucao = fase === 'mostrar' ? 'Guarde a ordem destas ' + coisa + '.' : (fase === 'certo' ? 'Você repetiu a ordem certinha.' : 'Toque nas ' + coisa + ' na mesma ordem.');
+      out.mostrarGrid = colunas(110);
+      out.itensMostrar = rd.itens.map((v, i) => this.tile(v, 'show', i + 1));
+      out.temSlots = fase !== 'mostrar';
+      out.slotsGrid = colunas(90);
+      out.slots = rd.itens.map((v, i) => i < resp.length ? this.tile(resp[i], 'ok', i + 1) : {
+        img: '', label: String(i + 1), imgStyle: '', labelStyle: 'font-size: clamp(24px, 4.5vw, 34px); color: #4A5560',
+        style: 'box-sizing: border-box; min-height: ' + (c.modo === 'cor' ? '110px' : '120px') + '; border-radius: 22px; border: 3px dashed #9AA6A0; display: flex; align-items: center; justify-content: center; font-weight: 700'
+      });
+      out.opcoesGrid = colunas(c.modo === 'cor' ? 130 : 110);
+      out.podeRever = fase === 'responder';
+      out.reverLabel = 'Ver a ordem de novo';
+      out.certoTexto = 'Você lembrou a sequência.';
+      out.opcoes = rd.opcoes.map((v) => {
+        const usado = resp.indexOf(v) >= 0;
+        return Object.assign(this.tile(v, usado ? 'ok' : 'normal'), { off: usado || fase === 'certo' ? 'true' : 'false', pick: function () { self.escolher(v); } });
+      });
+    } else if (c.tipo === 'lista') {
+      const faltam = rd.itens.length - resp.length;
+      out.instrucao = fase === 'mostrar' ? 'Leia a lista de compras com calma.' : (fase === 'certo' ? 'Você lembrou todos os itens.' : 'Toque nos itens que estavam na lista. ' + (faltam === 1 ? 'Falta 1.' : 'Faltam ' + faltam + '.'));
+      out.mostrarGrid = colunas(150);
+      out.itensMostrar = rd.itens.map((v, i) => this.tile(v, 'show', i + 1));
+      out.opcoesGrid = colunas(150);
+      out.podeRever = fase === 'responder';
+      out.reverLabel = 'Ver a lista de novo';
+      out.certoTexto = 'Você lembrou todos os itens da lista.';
+      out.opcoes = rd.opcoes.map((v) => {
+        const st = resp.indexOf(v) >= 0 ? 'ok' : (erradas.indexOf(v) >= 0 ? 'off' : 'normal');
+        return Object.assign(this.tile(v, st), { off: st !== 'normal' || fase === 'certo' ? 'true' : 'false', pick: function () { self.escolher(v); } });
+      });
+    } else if (c.tipo === 'diferente') {
+      out.instrucao = fase === 'certo' ? 'Você achou a figura diferente.' : 'Toque na figura que é diferente das outras.';
+      out.opcoesGrid = 'display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(10px, 2.6vw, 18px)';
+      out.certoTexto = 'Você achou a figura diferente.';
+      out.opcoes = rd.opcoes.map((v, i) => {
+        const st = (fase === 'certo' && i === rd.certa) ? 'ok' : (erradas.indexOf(i) >= 0 ? 'off' : 'normal');
+        return Object.assign(this.tile(v, st), { off: st !== 'normal' || fase === 'certo' ? 'true' : 'false', pick: function () { self.escolher(i); } });
+      });
+    } else {
+      const fp = c.tipo === 'figura-palavra';
+      out.temPrompt = true;
+      out.promptImg = fp ? this.img(rd.fig) : '';
+      out.promptAlt = fp ? 'Figura para nomear' : '';
+      out.promptPalavra = fp ? '' : rd.palavra;
+      out.instrucao = fase === 'certo' ? 'Isso mesmo!' : (fp ? 'Como se chama esta figura? Fale em voz alta e toque na palavra.' : 'Leia a palavra em voz alta e toque na figura que combina.');
+      out.opcoesGrid = fp ? colunas(200) : 'display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(10px, 2.6vw, 18px)';
+      out.certoTexto = 'Isso mesmo: ' + (fp ? rd.certa : rd.palavra) + '.';
+      out.opcoes = rd.opcoes.map((v) => {
+        const st = (fase === 'certo' && v === rd.certa) ? 'ok' : (erradas.indexOf(v) >= 0 ? 'off' : 'normal');
+        return Object.assign(this.tile(v, st), { off: st !== 'normal' || fase === 'certo' ? 'true' : 'false', pick: function () { self.escolher(v); } });
+      });
+    }
+    return out;
+  }
+}
+</script>
+</body>
+</html>

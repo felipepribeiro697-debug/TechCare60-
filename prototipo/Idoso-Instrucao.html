@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-app="idoso">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,6 +23,8 @@ body{background:#DDE3DF}
 .tc-home{position:fixed;right:16px;bottom:16px;z-index:50;font:600 14px/1 system-ui,sans-serif;background:#183236;color:#fff;text-decoration:none;padding:10px 14px;border-radius:999px;opacity:.85}
 .tc-home:hover{opacity:1;color:#fff}
 </style>
+<script src="../assets/tema.js"></script>
+<script src="../assets/store.js"></script>
 <script src="../assets/dc-lite.js"></script>
 </head>
 <body>
@@ -68,7 +70,7 @@ body{background:#DDE3DF}
   </div>
 
   <div style="margin-top: auto; display: flex; flex-direction: column; gap: 18px">
-    <button onClick="{{ouvir}}" style="font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 14px; height: 88px; border-radius: 24px; border: 3px solid #0B5D66; background: #FFFFFF; font-size: clamp(20px, 3.91vw, 30px); font-weight: 700; color: #0B5D66">
+    <button class="tc-ouvir" onClick="{{ouvir}}" style="font-family: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 14px; height: 88px; border-radius: 24px; border: 3px solid #0B5D66; background: #FFFFFF; font-size: clamp(20px, 3.91vw, 30px); font-weight: 700; color: #0B5D66">
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0B5D66" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
       Ouvir a explicação
     </button>

@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="pt-BR" data-app="idoso">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>TechCare 60+ – Esqueci meu PIN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+h1,h2{overflow-wrap:anywhere}
+body{margin:0}
+a{color:#0B5D66}a:hover{color:#08434A}
+.key,.btn{font-family:inherit;cursor:pointer}
+input:focus,.btn:focus-visible,.key:focus-visible{outline:3px solid #0B5D66;outline-offset:2px}
+</style>
+<style>
+body{background:#DDE3DF}
+#dc-root>*{background-color:#F4F6F3}
+@media (min-width: 820px){
+  #dc-root{padding:24px 0}
+  #dc-root>*{min-height:calc(100vh - 48px) !important;border-radius:24px;box-shadow:0 8px 30px rgba(0,0,0,.18);overflow:hidden}
+}
+</style>
+<script src="../assets/tema.js"></script>
+<script src="../assets/store.js"></script>
+<script src="../assets/dc-lite.js"></script>
+</head>
+<body>
+<template id="dc-tpl">
+<div style="width: 100%; max-width: 768px; min-height: 100vh; margin: 0 auto; box-sizing: border-box; padding: clamp(16px, 6.25vw, 48px) clamp(16px, 7.29vw, 56px); display: flex; flex-direction: column; align-items: center; gap: 26px; background: #F4F6F3; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; color: #1B1F23">
+  <div style="align-self: stretch; display: flex; justify-content: space-between; align-items: center; gap: 12px">
+    <a href="{{voltarHref}}" onClick="{{voltar}}" style="display: flex; align-items: center; gap: 10px; font-size: clamp(18px, 3.12vw, 24px); font-weight: 700; text-decoration: none; padding: 12px 20px 12px 8px; border-radius: 16px; background: #FFFFFF; border: 2px solid #C9D1CC; color: #1B1F23">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1B1F23" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+      Voltar
+    </a>
+    <div style="display: flex; align-items: center; gap: 8px" aria-hidden="true">
+      <template data-k="for" list="{{passos}}" as="p" hint-placeholder-count="4">
+        <div style="{{p.style}}"></div>
+      </template>
+    </div>
+  </div>
+
+  <!-- 1. Informar o e-mail (igual ao "Esqueci minha senha" do admin) -->
+  <template data-k="if" value="{{fEmail}}" hint-placeholder-val="{{ true }}">
+    <form onSubmit="{{enviar}}" novalidate style="align-self: stretch; display: flex; flex-direction: column; gap: 22px">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center">
+        <div style="width: clamp(76px, 17vw, 120px); height: clamp(76px, 17vw, 120px); border-radius: 50%; background: #E3F0F1; display: flex; align-items: center; justify-content: center">
+          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#0B5D66" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3L21 2M16 7l3 3M19 4l2 2"/></svg>
+        </div>
+        <h1 style="margin: 0; font-size: clamp(28px, 5.6vw, 42px); line-height: 1.15">Esqueceu seu PIN, {{primeiro}}?</h1>
+        <p style="margin: 0; font-size: clamp(19px, 3.8vw, 27px); line-height: 1.4; color: #2B333A">Digite o e-mail cadastrado. Vamos enviar um link para você criar um PIN novo.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <label for="recEmail" style="font-size: clamp(18px, 3.4vw, 24px); font-weight: 700">E-mail</label>
+        <input id="recEmail" type="email" inputmode="email" autocomplete="email" value="{{email}}" onInput="{{onEmail}}" placeholder="nome@exemplo.com" style="font-family: inherit; font-size: clamp(19px, 3.6vw, 26px); height: 68px; box-sizing: border-box; padding: 0 18px; border: 2px solid #9AA6A0; border-radius: 16px; background: #FFFFFF; color: #1B1F23">
+        <template data-k="if" value="{{dicaEmail}}" hint-placeholder-val="{{ true }}">
+          <span style="font-size: clamp(16px, 3vw, 20px); color: #4A5560">{{dicaEmail}}</span>
+        </template>
+      </div>
+      <template data-k="if" value="{{erro}}" hint-placeholder-val="{{ false }}">
+        <div role="alert" style="background: #FDECE6; border: 2px solid #B4430F; border-radius: 16px; padding: 14px 18px; font-size: clamp(17px, 3.3vw, 22px); color: #7A2A08; line-height: 1.35">{{erro}}</div>
+      </template>
+      <button type="submit" class="btn" style="display: flex; align-items: center; justify-content: center; gap: 12px; height: 88px; border-radius: 24px; border: none; background: #0B5D66; color: #FFFFFF; font-size: clamp(21px, 4.2vw, 32px); font-weight: 700">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg>
+        Enviar link de recuperação
+      </button>
+      <a href="Idoso-PIN.html" style="align-self: center; font-size: clamp(18px, 3.4vw, 22px); padding: 8px">Voltar para o PIN</a>
+    </form>
+  </template>
+
+  <!-- 2. Link enviado + simulação do e-mail recebido -->
+  <template data-k="if" value="{{fEnviado}}" hint-placeholder-val="{{ false }}">
+    <div style="align-self: stretch; display: flex; flex-direction: column; gap: 14px; background: #FFFFFF; border: 2px solid #C9D1CC; border-radius: 24px; padding: clamp(18px, 4vw, 26px)">
+      <div style="display: flex; gap: 14px; align-items: flex-start">
+        <div style="width: 60px; height: 60px; flex-shrink: 0; border-radius: 50%; background: #E4EEE6; display: flex; align-items: center; justify-content: center">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 13V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h9"/><path d="M22 6l-10 7L2 6"/><path d="M16 19l2 2 4-4"/></svg>
+        </div>
+        <div role="status" style="display: flex; flex-direction: column; gap: 6px">
+          <h1 style="margin: 0; font-size: clamp(26px, 5vw, 36px); line-height: 1.15">Verifique seu e-mail</h1>
+          <p style="margin: 0; font-size: clamp(17px, 3.4vw, 23px); line-height: 1.45; color: #2B333A; overflow-wrap: anywhere">Se <b>{{emailMascarado}}</b> estiver cadastrado, vai chegar um link para criar um PIN novo. O link vale por 30 minutos.</p>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px">
+        <button type="button" class="btn" onClick="{{reenviar}}" style="height: 56px; padding: 0 18px; border-radius: 14px; border: 2px solid #C9D1CC; background: #FFFFFF; color: #0B5D66; font-size: clamp(16px, 3vw, 20px); font-weight: 700">{{reenviarLabel}}</button>
+        <button type="button" class="btn" onClick="{{outroEmail}}" style="height: 56px; padding: 0 18px; border-radius: 14px; border: 2px solid #C9D1CC; background: #FFFFFF; color: #0B5D66; font-size: clamp(16px, 3vw, 20px); font-weight: 700">Usar outro e-mail</button>
+      </div>
+    </div>
+
+    <div style="align-self: stretch; display: flex; flex-direction: column; gap: 8px">
+      <div style="align-self: flex-start; font-size: 15px; font-weight: 700; letter-spacing: .5px; color: #7A5B00; background: #FFF4D6; border: 1px solid #E2C46A; padding: 6px 12px; border-radius: 999px">SIMULAÇÃO · CAIXA DE ENTRADA</div>
+      <div style="background: #FFFFFF; border: 2px solid #C9D1CC; border-radius: 22px; overflow: hidden">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #D5DBD7; display: flex; flex-direction: column; gap: 4px; font-size: clamp(15px, 2.8vw, 18px); color: #4A5560">
+          <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap"><span><b style="color: #1B1F23">TechCare 60+</b> &lt;nao-responda@techcare60.exemplo&gt;</span><span>agora</span></div>
+          <div style="overflow-wrap: anywhere">Para: {{email}}</div>
+          <div style="font-size: clamp(18px, 3.4vw, 22px); font-weight: 700; color: #1B1F23; margin-top: 4px">Redefinição de PIN – TechCare 60+</div>
+        </div>
+        <div style="padding: 20px; display: flex; flex-direction: column; gap: 14px; font-size: clamp(17px, 3.2vw, 21px); line-height: 1.5">
+          <div>Olá!</div>
+          <div>Recebemos um pedido para criar um PIN novo para {{nome}} entrar no TechCare 60+. Toque no botão abaixo para escolher os 4 números novos.</div>
+          <button type="button" class="btn" onClick="{{abrirLink}}" style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 64px; padding: 0 24px; border-radius: 16px; border: none; background: #0B5D66; color: #FFFFFF; font-size: clamp(18px, 3.4vw, 24px); font-weight: 700">Criar PIN novo</button>
+          <div style="font-size: clamp(14px, 2.6vw, 17px); color: #4A5560">Se você não pediu a troca, ignore este e-mail: o PIN continua o mesmo.</div>
+        </div>
+      </div>
+    </div>
+    <a href="Idoso-PIN.html" style="font-size: clamp(18px, 3.4vw, 22px); padding: 8px">Voltar para o PIN</a>
+  </template>
+
+  <!-- 3. Criar e confirmar o PIN novo -->
+  <template data-k="if" value="{{fPin}}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center">
+      <h1 style="margin: 0; font-size: clamp(26px, 5.21vw, 40px)">{{pinTitulo}}</h1>
+      <p style="margin: 0; font-size: clamp(18px, 3.65vw, 28px); color: #2B333A">{{pinTexto}}</p>
+    </div>
+    <div style="display: flex; gap: 24px" aria-label="Números digitados">
+      <template data-k="for" list="{{dots}}" as="dot" hint-placeholder-count="4">
+        <div style="{{dot.style}}"></div>
+      </template>
+    </div>
+    <template data-k="if" value="{{pinErro}}" hint-placeholder-val="{{ false }}">
+      <div role="alert" style="width: 100%; max-width: 480px; box-sizing: border-box; background: #FDECE6; border: 2px solid #B4430F; border-radius: 18px; padding: 14px 20px; font-size: clamp(17px, 3.3vw, 22px); color: #7A2A08; text-align: center; line-height: 1.35">{{pinErro}}</div>
+    </template>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; width: 100%; max-width: 480px">
+      <template data-k="for" list="{{keys}}" as="k" hint-placeholder-count="9">
+        <button class="key" onClick="{{k.press}}" style="height: 88px; border-radius: 22px; border: 2px solid #C9D1CC; background: #FFFFFF; font-size: clamp(29px, 5.73vw, 44px); font-weight: 700; color: #1B1F23">{{k.label}}</button>
+      </template>
+      <button class="key" onClick="{{apagar}}" aria-label="Apagar o último número" title="Apagar" style="height: 88px; border-radius: 22px; border: 2px solid #C9D1CC; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#1B1F23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><path d="M18 9l-6 6M12 9l6 6"/></svg>
+      </button>
+      <button class="key" onClick="{{zero}}" style="height: 88px; border-radius: 22px; border: 2px solid #C9D1CC; background: #FFFFFF; font-size: clamp(29px, 5.73vw, 44px); font-weight: 700; color: #1B1F23">0</button>
+      <div></div>
+    </div>
+  </template>
+
+  <!-- 4. Pronto -->
+  <template data-k="if" value="{{fOk}}" hint-placeholder-val="{{ false }}">
+    <div style="margin-top: 20px; width: clamp(110px, 26vw, 180px); height: clamp(110px, 26vw, 180px); border-radius: 50%; background: #E4EEE6; display: flex; align-items: center; justify-content: center">
+      <div style="width: clamp(78px, 18vw, 130px); height: clamp(78px, 18vw, 130px); border-radius: 50%; background: #1E6B3A; display: flex; align-items: center; justify-content: center">
+        <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+    </div>
+    <div role="status" style="display: flex; flex-direction: column; gap: 12px; text-align: center">
+      <h1 style="margin: 0; font-size: clamp(30px, 6vw, 46px)">PIN alterado!</h1>
+      <p style="margin: 0; font-size: clamp(20px, 4vw, 30px); line-height: 1.4; color: #2B333A">Use o seu PIN novo para entrar, {{primeiro}}.</p>
+    </div>
+    <a href="Idoso-PIN.html?redefinido=1" style="margin-top: auto; align-self: stretch; display: flex; align-items: center; justify-content: center; gap: 12px; height: 96px; border-radius: 24px; background: #0B5D66; color: #FFFFFF; font-size: clamp(22px, 4.69vw, 34px); font-weight: 700; text-decoration: none">
+      Ir para o PIN
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </template>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" id="dc-logic" data-props='{"$preview":{"width":768,"height":1024}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const idoso = window.TC ? TC.current() : null;
+    // Como no admin: o campo já vem com o e-mail cadastrado (pode ser trocado).
+    this.email = (idoso && idoso.email) || '';
+    this.state = { fase: 'email', pin: '', primeiroPin: '', erro: '', reenviado: false };
+  }
+  componentWillUnmount() { clearTimeout(this.timer); }
+  enviar(e) {
+    if (e) e.preventDefault();
+    const ok = window.TC ? TC.emailValido(this.email) : /@/.test(this.email);
+    if (!ok) { this.setState({ erro: 'Digite um e-mail válido, por exemplo nome@exemplo.com.' }); return; }
+    this.email = this.email.trim();
+    this.setState({ fase: 'enviado', erro: '', reenviado: false });
+  }
+  digitar(d) {
+    const { fase, pin, primeiroPin } = this.state;
+    if (pin.length >= 4) return;
+    const novo = pin + d;
+    this.setState({ pin: novo, erro: '' });
+    if (novo.length < 4) return;
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      if (fase === 'novo') { this.setState({ fase: 'confirmar', primeiroPin: novo, pin: '' }); return; }
+      if (novo !== primeiroPin) {
+        this.setState({ fase: 'novo', primeiroPin: '', pin: '', erro: 'Os dois PINs não ficaram iguais. Vamos tentar de novo.' });
+        return;
+      }
+      const idoso = window.TC ? TC.current() : null;
+      if (idoso && window.TC) TC.update(idoso.id, { pin: novo });
+      this.setState({ fase: 'ok', pin: '' });
+    }, 350);
+  }
+  renderVals() {
+    const self = this;
+    const idoso = (window.TC ? TC.current() : null) || { nome: 'Maria Aparecida Souza', email: '' };
+    const nome = (idoso.nome || 'Idoso').trim();
+    const primeiro = nome.split(/\s+/)[0];
+    const { fase, pin, erro, reenviado } = this.state;
+    const n = pin.length;
+    const dots = [0, 1, 2, 3].map((i) => ({
+      style: 'width: 40px; height: 40px; border-radius: 20px; box-sizing: border-box; border: 4px solid #0B5D66; background: ' + (i < n ? '#0B5D66' : '#FFFFFF')
+    }));
+    const keys = ['1','2','3','4','5','6','7','8','9'].map((d) => ({ label: d, press: () => this.digitar(d) }));
+    const ordem = ['email', 'enviado', 'pin', 'ok'];
+    const at = ordem.indexOf(fase === 'novo' || fase === 'confirmar' ? 'pin' : fase);
+    const passos = ordem.map(function (_, i) {
+      return { style: 'height: 12px; border-radius: 6px; width: ' + (i === at ? '40px' : '12px') + '; background: ' + (i <= at ? '#0B5D66' : '#C9D1CC') };
+    });
+    // "Voltar" volta um passo dentro do fluxo; no primeiro passo, volta ao PIN.
+    const anterior = { enviado: 'email', novo: 'enviado', confirmar: 'novo' }[fase];
+    return {
+      passos: passos,
+      primeiro: primeiro, nome: nome,
+      email: this.email,
+      emailMascarado: window.TC ? TC.mascararEmail(this.email) : this.email,
+      dicaEmail: idoso.cuidadorNome && idoso.email ? 'E-mail de ' + idoso.cuidadorNome + '.' : (idoso.email ? '' : 'Se não souber o e-mail, peça ajuda ao profissional.'),
+      fEmail: fase === 'email', fEnviado: fase === 'enviado',
+      fPin: fase === 'novo' || fase === 'confirmar', fOk: fase === 'ok',
+      erro: fase === 'email' ? erro : '',
+      pinTitulo: fase === 'confirmar' ? 'Digite o PIN novo de novo' : 'Escolha um PIN novo',
+      pinTexto: fase === 'confirmar' ? 'Os mesmos 4 números, para confirmar.' : '4 números fáceis de lembrar.',
+      pinErro: fase === 'novo' || fase === 'confirmar' ? erro : '',
+      dots: dots, keys: keys,
+      zero: () => this.digitar('0'),
+      apagar: () => { clearTimeout(this.timer); this.setState({ pin: this.state.pin.slice(0, -1), erro: '' }); },
+      onEmail: function (e) { self.email = e.target.value; },
+      enviar: function (e) { self.enviar(e); },
+      reenviar: function () { self.setState({ reenviado: true }); },
+      reenviarLabel: reenviado ? 'Link reenviado' : 'Reenviar link',
+      outroEmail: function () { self.setState({ fase: 'email', erro: '' }); },
+      abrirLink: function () { self.setState({ fase: 'novo', pin: '', primeiroPin: '', erro: '' }); },
+      voltarHref: anterior ? '#' : 'Idoso-PIN.html',
+      voltar: function (e) {
+        if (!anterior) return;
+        if (e) e.preventDefault();
+        clearTimeout(self.timer);
+        self.setState({ fase: anterior, pin: '', primeiroPin: '', erro: '' });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pt-BR" data-app="admin">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>TechCare 60+ – Recuperar senha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F6F3}
+a{color:#0B5D66}a:hover{color:#08434A}
+input:focus,button:focus-visible{outline:3px solid #0B5D66;outline-offset:1px}
+button{font-family:inherit;cursor:pointer}
+</style>
+<style>
+#dc-root{min-height:100vh}
+</style>
+<script src="../assets/tema.js"></script>
+<script src="../assets/store.js"></script>
+<script src="../assets/dc-lite.js"></script>
+</head>
+<body>
+<template id="dc-tpl">
+<div style="min-height: 100vh; min-height: 100dvh; box-sizing: border-box; padding: clamp(14px, 3.5vw, 48px) 20px; display: flex; align-items: center; justify-content: center; background: #F4F6F3; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; color: #1B1F23">
+  <div style="width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: clamp(12px, 3vw, 24px)">
+    <div style="display: flex; align-items: center; gap: 12px; justify-content: center">
+      <div style="width: 44px; height: 44px; border-radius: 12px; background: #0B5D66; display: flex; align-items: center; justify-content: center">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/><path d="M8 12h2l1.5-2.5L13 14l1.5-2H16"/></svg>
+      </div>
+      <div style="font-size: 24px; font-weight: 700">TechCare 60+</div>
+    </div>
+
+    <div style="display: flex; align-items: center; justify-content: center; gap: 8px" aria-hidden="true">
+      <template data-k="for" list="{{passos}}" as="p" hint-placeholder-count="3">
+        <div style="{{p.style}}"></div>
+      </template>
+    </div>
+
+    <!-- 1. Informar o e-mail -->
+    <template data-k="if" value="{{fEmail}}" hint-placeholder-val="{{ true }}">
+      <form onSubmit="{{enviar}}" novalidate style="background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 16px; padding: clamp(20px, 5vw, 36px); display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <h1 style="margin: 0; font-size: 26px">Esqueceu sua senha?</h1>
+          <p style="margin: 0; font-size: 16px; line-height: 1.5; color: #4A5560">Digite o e-mail da sua conta. Vamos enviar um link para você criar uma senha nova.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <label for="recEmail" style="font-size: 15px; font-weight: 700">E-mail</label>
+          <input id="recEmail" type="email" autocomplete="email" value="{{email}}" onInput="{{onEmail}}" style="font-family: inherit; font-size: 16px; height: 48px; box-sizing: border-box; padding: 0 14px; border: 1px solid #9AA6A0; border-radius: 10px; color: #1B1F23">
+        </div>
+        <template data-k="if" value="{{erro}}" hint-placeholder-val="{{ false }}">
+          <p role="alert" style="margin: 0; font-size: 14px; color: #B4430F">{{erro}}</p>
+        </template>
+        <button type="submit" style="display: flex; align-items: center; justify-content: center; gap: 8px; height: 50px; border-radius: 10px; border: none; background: #0B5D66; color: #FFFFFF; font-size: 17px; font-weight: 700">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg>
+          Enviar link de recuperação
+        </button>
+        <a href="Prof-Login.html" style="align-self: center; font-size: 15px">Voltar para o login</a>
+      </form>
+    </template>
+
+    <!-- 2. Link enviado + simulação do e-mail recebido -->
+    <template data-k="if" value="{{fEnviado}}" hint-placeholder-val="{{ false }}">
+      <div style="background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 16px; padding: clamp(20px, 5vw, 32px); display: flex; flex-direction: column; gap: 14px">
+        <div style="display: flex; gap: 14px; align-items: flex-start">
+          <div style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 50%; background: #E4EEE6; display: flex; align-items: center; justify-content: center">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 13V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h9"/><path d="M22 6l-10 7L2 6"/><path d="M16 19l2 2 4-4"/></svg>
+          </div>
+          <div role="status" style="display: flex; flex-direction: column; gap: 4px">
+            <h1 style="margin: 0; font-size: 24px">Verifique seu e-mail</h1>
+            <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #4A5560">Se <b style="color: #1B1F23">{{emailMascarado}}</b> estiver cadastrado, você vai receber um link para criar uma senha nova. O link vale por 30 minutos.</p>
+          </div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 15px">
+          <button type="button" onClick="{{reenviar}}" style="border: none; background: none; padding: 4px 0; color: #0B5D66; font-size: 15px; font-weight: 700; text-decoration: underline">{{reenviarLabel}}</button>
+          <button type="button" onClick="{{outroEmail}}" style="border: none; background: none; padding: 4px 0; color: #0B5D66; font-size: 15px; font-weight: 700; text-decoration: underline">Usar outro e-mail</button>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <div style="align-self: flex-start; font-size: 12px; font-weight: 700; letter-spacing: .6px; color: #7A5B00; background: #FFF4D6; border: 1px solid #E2C46A; padding: 4px 10px; border-radius: 999px">SIMULAÇÃO · CAIXA DE ENTRADA</div>
+        <div style="background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 14px; overflow: hidden">
+          <div style="padding: 14px 18px; border-bottom: 1px solid #E1E6E2; display: flex; flex-direction: column; gap: 3px; font-size: 14px; color: #4A5560">
+            <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap"><span><b style="color: #1B1F23">TechCare 60+</b> &lt;nao-responda@techcare60.exemplo&gt;</span><span>agora</span></div>
+            <div>Para: {{email}}</div>
+            <div style="font-size: 16px; font-weight: 700; color: #1B1F23; margin-top: 4px">Redefinição de senha – TechCare 60+</div>
+          </div>
+          <div style="padding: 18px; display: flex; flex-direction: column; gap: 12px; font-size: 15px; line-height: 1.55">
+            <div>Olá!</div>
+            <div>Recebemos um pedido para redefinir a senha da sua conta na área do profissional. Clique no botão abaixo para criar uma senha nova.</div>
+            <button type="button" onClick="{{abrirLink}}" style="align-self: flex-start; height: 44px; padding: 0 18px; border-radius: 10px; border: none; background: #0B5D66; color: #FFFFFF; font-size: 15px; font-weight: 700">Redefinir senha</button>
+            <div style="font-size: 13px; color: #4A5560">Se você não pediu a troca, ignore este e-mail: sua senha continua a mesma.</div>
+          </div>
+        </div>
+      </div>
+      <a href="Prof-Login.html" style="align-self: center; font-size: 15px">Voltar para o login</a>
+    </template>
+
+    <!-- 3. Criar a senha nova -->
+    <template data-k="if" value="{{fNova}}" hint-placeholder-val="{{ false }}">
+      <form onSubmit="{{salvar}}" novalidate style="background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 16px; padding: clamp(20px, 5vw, 36px); display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <h1 style="margin: 0; font-size: 26px">Crie uma senha nova</h1>
+          <p style="margin: 0; font-size: 16px; line-height: 1.5; color: #4A5560">Use pelo menos 8 caracteres.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <label for="nova1" style="font-size: 15px; font-weight: 700">Nova senha</label>
+          <input id="nova1" type="password" autocomplete="new-password" value="{{nova1}}" onInput="{{onNova1}}" style="font-family: inherit; font-size: 16px; height: 48px; box-sizing: border-box; padding: 0 14px; border: 1px solid #9AA6A0; border-radius: 10px; color: #1B1F23">
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <label for="nova2" style="font-size: 15px; font-weight: 700">Repita a nova senha</label>
+          <input id="nova2" type="password" autocomplete="new-password" value="{{nova2}}" onInput="{{onNova2}}" style="font-family: inherit; font-size: 16px; height: 48px; box-sizing: border-box; padding: 0 14px; border: 1px solid #9AA6A0; border-radius: 10px; color: #1B1F23">
+        </div>
+        <template data-k="if" value="{{erro}}" hint-placeholder-val="{{ false }}">
+          <p role="alert" style="margin: 0; font-size: 14px; color: #B4430F">{{erro}}</p>
+        </template>
+        <button type="submit" style="height: 50px; border-radius: 10px; border: none; background: #0B5D66; color: #FFFFFF; font-size: 17px; font-weight: 700">Salvar senha nova</button>
+      </form>
+    </template>
+
+    <!-- 4. Pronto -->
+    <template data-k="if" value="{{fOk}}" hint-placeholder-val="{{ false }}">
+      <div role="status" style="background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 16px; padding: clamp(24px, 5vw, 36px); display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center">
+        <div style="width: 64px; height: 64px; border-radius: 50%; background: #1E6B3A; display: flex; align-items: center; justify-content: center">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <h1 style="margin: 0; font-size: 24px">Senha alterada!</h1>
+        <p style="margin: 0; font-size: 16px; line-height: 1.5; color: #4A5560">Use a senha nova para entrar na área do profissional.</p>
+        <a href="Prof-Login.html?redefinida=1" style="align-self: stretch; display: flex; align-items: center; justify-content: center; height: 50px; border-radius: 10px; background: #0B5D66; color: #FFFFFF; font-size: 17px; font-weight: 700; text-decoration: none">Ir para o login</a>
+      </div>
+    </template>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" id="dc-logic" data-props='{"$preview":{"width":1280,"height":820}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.email = window.TC ? TC.admin().email : 'fono.exemplo@clinica.com';
+    this.nova1 = '';
+    this.nova2 = '';
+    this.state = { fase: 'email', erro: '', reenviado: false };
+  }
+  enviar(e) {
+    if (e) e.preventDefault();
+    const ok = window.TC ? TC.emailValido(this.email) : /@/.test(this.email);
+    if (!ok) { this.setState({ erro: 'Digite um e-mail válido, por exemplo nome@clinica.com.' }); return; }
+    this.email = this.email.trim();
+    this.setState({ fase: 'enviado', erro: '', reenviado: false });
+  }
+  salvar(e) {
+    if (e) e.preventDefault();
+    if (this.nova1.length < 8) { this.setState({ erro: 'A senha precisa ter pelo menos 8 caracteres.' }); return; }
+    if (this.nova1 !== this.nova2) { this.setState({ erro: 'As duas senhas não estão iguais.' }); return; }
+    if (window.TC) TC.setSenhaAdmin(this.nova1);
+    this.nova1 = this.nova2 = '';
+    this.setState({ fase: 'ok', erro: '' });
+  }
+  renderVals() {
+    const self = this;
+    const { fase, erro, reenviado } = this.state;
+    const ordem = ['email', 'enviado', 'nova', 'ok'];
+    const at = ordem.indexOf(fase);
+    const passos = ordem.map(function (_, i) {
+      return { style: 'height: 8px; border-radius: 4px; width: ' + (i === at ? '36px' : '16px') + '; background: ' + (i <= at ? '#0B5D66' : '#C9D1CC') };
+    });
+    return {
+      passos: passos,
+      fEmail: fase === 'email', fEnviado: fase === 'enviado', fNova: fase === 'nova', fOk: fase === 'ok',
+      email: this.email,
+      emailMascarado: window.TC ? TC.mascararEmail(this.email) : this.email,
+      nova1: this.nova1, nova2: this.nova2,
+      erro: erro,
+      reenviarLabel: reenviado ? 'Link reenviado' : 'Reenviar link',
+      onEmail: function (e) { self.email = e.target.value; },
+      onNova1: function (e) { self.nova1 = e.target.value; },
+      onNova2: function (e) { self.nova2 = e.target.value; },
+      enviar: function (e) { self.enviar(e); },
+      salvar: function (e) { self.salvar(e); },
+      reenviar: function () { self.setState({ reenviado: true }); },
+      outroEmail: function () { self.setState({ fase: 'email', erro: '' }); },
+      abrirLink: function () { self.setState({ fase: 'nova', erro: '' }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

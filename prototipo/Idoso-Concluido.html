@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-app="idoso">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,6 +23,7 @@ body{background:#DDE3DF}
 .tc-home{position:fixed;right:16px;bottom:16px;z-index:50;font:600 14px/1 system-ui,sans-serif;background:#183236;color:#fff;text-decoration:none;padding:10px 14px;border-radius:999px;opacity:.85}
 .tc-home:hover{opacity:1;color:#fff}
 </style>
+<script src="../assets/tema.js"></script>
 <script src="../assets/store.js"></script>
 <script src="../assets/dc-lite.js"></script>
 </head>
@@ -37,13 +38,13 @@ body{background:#DDE3DF}
 
   <div style="display: flex; flex-direction: column; gap: 14px">
     <h1 style="margin: 0; font-size: clamp(37px, 7.29vw, 56px); line-height: 1.1">Muito bem, {{primeiro}}!</h1>
-    <p style="margin: 0; font-size: clamp(21px, 4.17vw, 32px); line-height: 1.35; color: #2B333A">Você terminou o Jogo da memória.</p>
+    <p style="margin: 0; font-size: clamp(21px, 4.17vw, 32px); line-height: 1.35; color: #2B333A">Você terminou a atividade {{titulo}}.</p>
   </div>
 
   <div style="align-self: stretch; background: #FFFFFF; border: 2px solid #C9D1CC; border-radius: 28px; padding: 28px; display: flex; flex-direction: column; gap: 18px">
     <div style="display: flex; align-items: center; justify-content: center; gap: 14px; font-size: clamp(18px, 3.65vw, 28px); font-weight: 700">
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10z"/><path d="M8 12l3 3 5-6"/></svg>
-      4 pares encontrados
+      {{resumo}}
     </div>
     <div style="font-size: clamp(18px, 3.12vw, 24px); color: #4A5560; line-height: 1.4">Sua participação foi guardada e a profissional poderá acompanhar.</div>
   </div>
@@ -72,28 +73,29 @@ body{background:#DDE3DF}
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    if (window.TC) TC.marcarFeita('memoria');
+    let id = 'm1';
+    try { id = new URLSearchParams(location.search).get('a') || 'm1'; } catch (e) { }
+    this.atividadeId = id;
+    if (window.TC) TC.marcarFeita(id);
   }
   renderVals() {
     const idoso = (window.TC ? TC.current() : null) || { nome: 'Maria Aparecida Souza' };
     const primeiro = (idoso.nome || 'Idoso').trim().split(/\s+/)[0];
-    const defs = [
-      { id: 'memoria', titulo: 'Jogo da memória', href: 'Idoso-Instrucao.html' },
-      { id: 'atencao', titulo: 'Encontre o diferente', href: '' },
-      { id: 'linguagem', titulo: 'Complete a frase', href: 'Idoso-Frase.html' }
-    ];
-    const feitasHoje = window.TC ? TC.feitasHoje() : ['atencao', 'memoria'];
-    const feitas = defs.filter(function (d) { return feitasHoje.indexOf(d.id) >= 0; }).length;
-    const falta = 3 - feitas;
-    let prox = null;
-    for (let i = 0; i < defs.length; i++) {
-      if (feitasHoje.indexOf(defs[i].id) < 0 && defs[i].href) { prox = defs[i]; break; }
-    }
+    const atual = (window.TC ? TC.atividade(this.atividadeId) : null) || { nome: 'Jogo da memória', resumo: 'Atividade concluída' };
+    // Próxima = primeira atividade do plano (definido no admin) ainda não feita hoje.
+    const plano = window.TC ? TC.planoAtual() : [];
+    const feitasHoje = window.TC ? TC.feitasHoje() : [];
+    const total = plano.length;
+    const feitas = plano.filter(function (a) { return feitasHoje.indexOf(a.id) >= 0; }).length;
+    const falta = total - feitas;
+    const prox = plano.find(function (a) { return feitasHoje.indexOf(a.id) < 0; }) || null;
     return {
       primeiro: primeiro,
-      faltaLabel: falta <= 0 ? 'TUDO FEITO HOJE' : ('FALTA ' + falta + (falta === 1 ? ' ATIVIDADE HOJE' : ' ATIVIDADES HOJE')),
-      proxNome: prox ? prox.titulo : 'Você fez tudo por hoje. Parabéns!',
-      pct: Math.round(feitas / 3 * 100),
+      titulo: atual.nome,
+      resumo: atual.resumo,
+      faltaLabel: falta <= 0 ? 'TUDO FEITO HOJE' : (falta === 1 ? 'FALTA 1 ATIVIDADE HOJE' : 'FALTAM ' + falta + ' ATIVIDADES HOJE'),
+      proxNome: prox ? prox.nome : 'Você fez tudo por hoje. Parabéns!',
+      pct: total ? Math.round(feitas / total * 100) : 100,
       proxHref: prox ? prox.href : 'Idoso-Hoje.html',
       proxLabel: prox ? 'Próxima atividade' : 'Ver minhas atividades'
     };

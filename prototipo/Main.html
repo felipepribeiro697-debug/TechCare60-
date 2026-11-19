@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-app="idoso" data-publico>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,10 +19,14 @@ body{background:#DDE3DF}
   #dc-root{padding:24px 0}
   #dc-root>*{min-height:calc(100vh - 48px) !important;border-radius:24px;box-shadow:0 8px 30px rgba(0,0,0,.18);overflow:hidden}
 }
-
-.tc-home{position:fixed;right:16px;bottom:16px;z-index:50;font:600 14px/1 system-ui,sans-serif;background:#183236;color:#fff;text-decoration:none;padding:10px 14px;border-radius:999px;opacity:.85}
-.tc-home:hover{opacity:1;color:#fff}
+.pg-btn{font-family:inherit;cursor:pointer}
+.pg-btn[aria-disabled="true"]{cursor:default;opacity:.3}
+.pg-dot{font-family:inherit;cursor:pointer;padding:0}
+@keyframes tcInNext{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+@keyframes tcInPrev{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.pg-grid{animation:none !important}}
 </style>
+<script src="../assets/tema.js"></script>
 <script src="../assets/store.js"></script>
 <script src="../assets/dc-lite.js"></script>
 </head>
@@ -44,12 +48,37 @@ body{background:#DDE3DF}
     <p style="margin: 0; font-size: clamp(20px, 3.91vw, 30px); line-height: 1.35; color: #2B333A">Toque na sua foto para entrar.</p>
   </div>
 
-  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 3.5vw, 28px)">
-    <template data-k="for" list="{{profiles}}" as="p" hint-placeholder-count="4">
-      <a href="Idoso-PIN.html" onClick="{{p.go}}" style="{{p.card}}">
-        <div style="{{p.avatar}}">{{p.inicial}}</div>
-        <div style="font-size: clamp(22px, 4.43vw, 34px); font-weight: 700">{{p.nome}}</div>
-      </a>
+  <div onTouchStart="{{touchStart}}" onTouchEnd="{{touchEnd}}" style="display: flex; flex-direction: column; gap: clamp(16px, 3vw, 24px)">
+    <div class="pg-grid" style="{{gridStyle}}">
+      <template data-k="for" list="{{profiles}}" as="p" hint-placeholder-count="4">
+        <a href="Idoso-PIN.html" onClick="{{p.go}}" style="{{p.card}}">
+          <div style="{{p.avatar}}">{{p.inicial}}</div>
+          <div style="font-size: clamp(22px, 4.43vw, 34px); font-weight: 700; text-align: center; overflow-wrap: anywhere">{{p.nome}}</div>
+        </a>
+      </template>
+    </div>
+
+    <template data-k="if" value="{{vazio}}" hint-placeholder-val="{{ false }}">
+      <div style="background: #FFFFFF; border: 2px dashed #C9D1CC; border-radius: 28px; padding: 32px 24px; text-align: center; font-size: clamp(18px, 3.4vw, 24px); color: #4A5560">Nenhum perfil cadastrado ainda. Peça ao profissional para cadastrar você.</div>
+    </template>
+
+    <template data-k="if" value="{{temPaginas}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+        <button class="pg-btn" onClick="{{anterior}}" aria-disabled="{{noInicio}}" aria-label="Ver perfis anteriores" style="flex-shrink: 0; width: clamp(60px, 11vw, 76px); height: clamp(60px, 11vw, 76px); border-radius: 22px; border: 3px solid #0B5D66; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#0B5D66" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 0">
+          <div role="group" aria-label="Páginas de perfis" style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px">
+            <template data-k="for" list="{{dots}}" as="d" hint-placeholder-count="2">
+              <button class="pg-dot" onClick="{{d.go}}" aria-label="{{d.aria}}" aria-current="{{d.current}}" style="{{d.style}}"></button>
+            </template>
+          </div>
+          <div aria-live="polite" style="font-size: clamp(16px, 3.1vw, 22px); color: #4A5560; text-align: center">{{paginaLabel}}</div>
+        </div>
+        <button class="pg-btn" onClick="{{proxima}}" aria-disabled="{{noFim}}" aria-label="Ver mais perfis" style="flex-shrink: 0; width: clamp(60px, 11vw, 76px); height: clamp(60px, 11vw, 76px); border-radius: 22px; border: 3px solid #0B5D66; background: #0B5D66; display: flex; align-items: center; justify-content: center">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
     </template>
   </div>
 
@@ -65,24 +94,99 @@ body{background:#DDE3DF}
 <div id="dc-root"></div>
 <script type="text/x-dc" id="dc-logic" data-props='{"$preview":{"width":768,"height":1024}}'>
 class Component extends DCLogic {
-  renderVals() {
-    const defs = [
-      { id: 'maria', nome: 'Maria', inicial: 'M', bg: '#E3F0F1', fg: '#0B5D66', border: '#0B5D66' },
-      { id: 'jose', nome: 'José', inicial: 'J', bg: '#FBE9DF', fg: '#9A3A0C', border: '#C9D1CC' },
-      { id: 'ana', nome: 'Ana', inicial: 'A', bg: '#ECE6F7', fg: '#5B3F9E', border: '#C9D1CC' },
-      { id: 'antonio', nome: 'Antônio', inicial: 'A', bg: '#E4EEE6', fg: '#1E6B3A', border: '#C9D1CC' }
+  constructor(props) {
+    super(props);
+    this.porPagina = 4;
+    this.state = { page: 0, dir: '' };
+    this.cores = [
+      { bg: '#E3F0F1', fg: '#0B5D66' },
+      { bg: '#FBE9DF', fg: '#9A3A0C' },
+      { bg: '#ECE6F7', fg: '#5B3F9E' },
+      { bg: '#E4EEE6', fg: '#1E6B3A' },
+      { bg: '#FFF4D6', fg: '#7A5B00' },
+      { bg: '#F9E3EA', fg: '#9B1C4A' }
     ];
-    const profiles = defs.map(function (d) {
-      let nome = d.nome;
-      try { if (window.TC) { const r = TC.get(d.id); if (r && r.nome) nome = r.nome.trim().split(/\s+/)[0]; } } catch (e) { }
+  }
+  componentDidMount() {
+    this.onKey = (e) => {
+      if (e.key === 'ArrowRight') this.ir(this.state.page + 1);
+      else if (e.key === 'ArrowLeft') this.ir(this.state.page - 1);
+    };
+    document.addEventListener('keydown', this.onKey);
+  }
+  componentWillUnmount() { document.removeEventListener('keydown', this.onKey); }
+  totalPaginas() {
+    const n = window.TC ? TC.all().length : 0;
+    return Math.max(1, Math.ceil(n / this.porPagina));
+  }
+  ir(p) {
+    const total = this.totalPaginas();
+    if (p < 0 || p >= total || p === this.state.page) return;
+    this.setState({ dir: p > this.state.page ? 'next' : 'prev', page: p });
+  }
+  renderVals() {
+    const self = this;
+    const idosos = window.TC ? TC.all() : [];
+    const atual = window.TC ? TC.currentId() : '';
+    const total = this.totalPaginas();
+    const page = Math.min(this.state.page, total - 1);
+
+    // Primeiro nome; se dois perfis tiverem o mesmo, mostra também o sobrenome.
+    const partes = idosos.map((d) => (d.nome || 'Idoso').trim().split(/\s+/));
+    const contagem = {};
+    partes.forEach((p) => { contagem[p[0]] = (contagem[p[0]] || 0) + 1; });
+
+    const inicio = page * this.porPagina;
+    const profiles = idosos.slice(inicio, inicio + this.porPagina).map((d, k) => {
+      const idx = inicio + k;
+      const p = partes[idx];
+      const nome = contagem[p[0]] > 1 && p.length > 1 ? p[0] + ' ' + p[p.length - 1] : p[0];
+      const cor = this.cores[idx % this.cores.length];
+      const borda = d.id === atual ? '#0B5D66' : '#C9D1CC';
       return {
-        nome: nome, inicial: (nome.charAt(0) || d.inicial).toUpperCase(),
-        card: 'text-decoration: none; color: #1B1F23; background: #FFFFFF; border: 3px solid ' + d.border + '; border-radius: 28px; padding: clamp(18px, 3.5vw, 32px) 24px; display: flex; flex-direction: column; align-items: center; gap: 14px',
-        avatar: 'width: clamp(76px, 18vw, 150px); height: clamp(76px, 18vw, 150px); border-radius: 50%; background: ' + d.bg + '; display: flex; align-items: center; justify-content: center; font-size: clamp(36px, 7.2vw, 60px); font-weight: 700; color: ' + d.fg,
+        nome: nome,
+        inicial: (nome.charAt(0) || '?').toUpperCase(),
+        card: 'text-decoration: none; color: #1B1F23; background: #FFFFFF; border: 3px solid ' + borda + '; border-radius: 28px; padding: clamp(18px, 3.5vw, 32px) 16px; display: flex; flex-direction: column; align-items: center; gap: 14px; min-width: 0',
+        avatar: 'width: clamp(76px, 18vw, 150px); height: clamp(76px, 18vw, 150px); border-radius: 50%; background: ' + cor.bg + '; display: flex; align-items: center; justify-content: center; font-size: clamp(36px, 7.2vw, 60px); font-weight: 700; color: ' + cor.fg,
         go: function () { if (window.TC) TC.setCurrent(d.id); }
       };
     });
-    return { profiles };
+
+    const dots = [];
+    for (let i = 0; i < total; i++) {
+      const on = i === page;
+      dots.push({
+        aria: 'Página ' + (i + 1) + ' de ' + total,
+        current: on ? 'page' : 'false',
+        style: 'height: 18px; border-radius: 9px; border: 2px solid #0B5D66; width: ' + (on ? '44px' : '18px') + '; background: ' + (on ? '#0B5D66' : '#FFFFFF'),
+        go: function () { self.ir(i); }
+      });
+    }
+
+    const anim = this.state.dir === 'next' ? 'tcInNext' : (this.state.dir === 'prev' ? 'tcInPrev' : '');
+    return {
+      profiles: profiles,
+      vazio: idosos.length === 0,
+      gridStyle: 'display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 3.5vw, 28px)' + (anim ? '; animation: ' + anim + ' .28s ease-out' : ''),
+      temPaginas: total > 1,
+      dots: dots,
+      paginaLabel: 'Página ' + (page + 1) + ' de ' + total,
+      noInicio: page === 0 ? 'true' : 'false',
+      noFim: page === total - 1 ? 'true' : 'false',
+      anterior: function () { self.ir(page - 1); },
+      proxima: function () { self.ir(page + 1); },
+      touchStart: function (e) {
+        const t = e.changedTouches && e.changedTouches[0];
+        self.tx = t ? t.clientX : null; self.ty = t ? t.clientY : null;
+      },
+      touchEnd: function (e) {
+        const t = e.changedTouches && e.changedTouches[0];
+        if (!t || self.tx == null) return;
+        const dx = t.clientX - self.tx, dy = t.clientY - self.ty;
+        self.tx = null;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) self.ir(page + (dx < 0 ? 1 : -1));
+      }
+    };
   }
 }
 </script>

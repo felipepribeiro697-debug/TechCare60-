@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-app="admin">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,15 +10,15 @@
 <style>
 body{margin:0;background:#F4F6F3}
 a{color:#0B5D66}a:hover{color:#08434A}
-input:focus{outline:3px solid #0B5D66;outline-offset:1px}
+input:focus,button:focus-visible{outline:3px solid #0B5D66;outline-offset:1px}
+button{font-family:inherit;cursor:pointer}
 </style>
 <style>
 #dc-root{min-height:100vh}
-.tc-home{position:fixed;right:16px;bottom:16px;z-index:50;font:600 14px/1 system-ui,sans-serif;background:#183236;color:#fff;text-decoration:none;padding:10px 14px;border-radius:999px;opacity:.85}
-.tc-home:hover{opacity:1;color:#fff}
 </style>
+<script src="../assets/tema.js"></script>
+<script src="../assets/store.js"></script>
 <script src="../assets/dc-lite.js"></script>
-
 </head>
 <body>
 <template id="dc-tpl">
@@ -31,22 +31,31 @@ input:focus{outline:3px solid #0B5D66;outline-offset:1px}
       <div style="font-size: 24px; font-weight: 700">TechCare 60+</div>
     </div>
 
-    <div style="background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 16px; padding: clamp(20px, 5vw, 36px); display: flex; flex-direction: column; gap: clamp(12px, 3vw, 20px)">
+    <form onSubmit="{{entrar}}" novalidate style="background: #FFFFFF; border: 1px solid #D5DBD7; border-radius: 16px; padding: clamp(20px, 5vw, 36px); display: flex; flex-direction: column; gap: clamp(12px, 3vw, 20px)">
       <div style="display: flex; flex-direction: column; gap: 6px">
         <h1 style="margin: 0; font-size: 26px">Área do profissional</h1>
         <p style="margin: 0; font-size: 16px; color: #4A5560">Entre para acompanhar os idosos sob seus cuidados.</p>
       </div>
+      <template data-k="if" value="{{redefinida}}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="display: flex; gap: 10px; align-items: flex-start; background: #E4EEE6; border: 1px solid #9CC3A8; border-radius: 10px; padding: 12px 14px; font-size: 15px; line-height: 1.45; color: #14532B">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 1px" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          Senha redefinida. Entre com a sua nova senha.
+        </div>
+      </template>
       <div style="display: flex; flex-direction: column; gap: 6px">
         <label for="email" style="font-size: 15px; font-weight: 700">E-mail</label>
-        <input id="email" type="email" value="fono.exemplo@clinica.com" style="font-family: inherit; font-size: 16px; height: 48px; box-sizing: border-box; padding: 0 14px; border: 1px solid #9AA6A0; border-radius: 10px; color: #1B1F23">
+        <input id="email" type="email" autocomplete="username" value="{{email}}" onInput="{{onEmail}}" style="font-family: inherit; font-size: 16px; height: 48px; box-sizing: border-box; padding: 0 14px; border: 1px solid #9AA6A0; border-radius: 10px; color: #1B1F23">
       </div>
       <div style="display: flex; flex-direction: column; gap: 6px">
         <label for="senha" style="font-size: 15px; font-weight: 700">Senha</label>
-        <input id="senha" type="password" value="12345678" style="font-family: inherit; font-size: 16px; height: 48px; box-sizing: border-box; padding: 0 14px; border: 1px solid #9AA6A0; border-radius: 10px; color: #1B1F23">
+        <input id="senha" type="password" autocomplete="current-password" value="{{senha}}" onInput="{{onSenha}}" style="font-family: inherit; font-size: 16px; height: 48px; box-sizing: border-box; padding: 0 14px; border: 1px solid #9AA6A0; border-radius: 10px; color: #1B1F23">
       </div>
-      <a href="Prof-Idosos.html" style="display: flex; align-items: center; justify-content: center; height: 50px; border-radius: 10px; background: #0B5D66; color: #FFFFFF; font-size: 17px; font-weight: 700; text-decoration: none">Entrar</a>
-      <a href="#" style="align-self: center; font-size: 15px">Esqueci minha senha</a>
-    </div>
+      <template data-k="if" value="{{erro}}" hint-placeholder-val="{{ false }}">
+        <p role="alert" style="margin: 0; font-size: 14px; color: #B4430F">{{erro}}</p>
+      </template>
+      <button type="submit" style="display: flex; align-items: center; justify-content: center; height: 50px; border-radius: 10px; border: none; background: #0B5D66; color: #FFFFFF; font-size: 17px; font-weight: 700">Entrar</button>
+      <a href="Prof-Recuperar.html" style="align-self: center; font-size: 15px">Esqueci minha senha</a>
+    </form>
 
     <div style="display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: #4A5560; line-height: 1.5">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A5560" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 1px" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
@@ -59,8 +68,36 @@ input:focus{outline:3px solid #0B5D66;outline-offset:1px}
 <div id="dc-root"></div>
 <script type="text/x-dc" id="dc-logic" data-props='{"$preview":{"width":1280,"height":820}}'>
 class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    let redefinida = false;
+    try { redefinida = new URLSearchParams(location.search).get('redefinida') === '1'; } catch (e) { }
+    const admin = window.TC ? TC.admin() : { email: 'fono.exemplo@clinica.com', senha: '12345678' };
+    // Protótipo: os campos já vêm preenchidos com a conta de demonstração.
+    this.email = admin.email;
+    this.senha = redefinida ? '' : admin.senha;
+    this.state = { erro: '', redefinida: redefinida };
+  }
+  componentDidMount() {
+    if (this.state.redefinida) { const el = document.getElementById('senha'); if (el) el.focus(); }
+  }
+  entrar(e) {
+    if (e) e.preventDefault();
+    if (!this.email.trim() || !this.senha) { this.setState({ erro: 'Preencha o e-mail e a senha.' }); return; }
+    if (window.TC && !TC.loginAdmin(this.email, this.senha)) { this.setState({ erro: 'E-mail ou senha incorretos. Confira e tente de novo.' }); return; }
+    location.href = 'Prof-Idosos.html';
+  }
   renderVals() {
-    return {};
+    const self = this;
+    return {
+      email: this.email,
+      senha: this.senha,
+      erro: this.state.erro,
+      redefinida: this.state.redefinida,
+      onEmail: function (e) { self.email = e.target.value; },
+      onSenha: function (e) { self.senha = e.target.value; },
+      entrar: function (e) { self.entrar(e); }
+    };
   }
 }
 </script>
